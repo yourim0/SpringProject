@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.tp.mapper.UsersMapper">
+	
+	<!--회원가입  -->
+	<insert id="UserJoin">
+		insert into member (id , empno, pw, phoneNum) values (#{id}, #{empno}, #{pw}, #{phoneNum})
+	</insert>
+	
+	<!-- 사번인증 -->
+	<select id="MemberLogin" resultType="com.tp.domain.MemberVO" >
+			SELECT * FROM COMPONY c,
+			(select * from compony where empno NOT in (select empno from member)) m 
+			WHERE m.EMPNO = c.EMPNO AND c.EMPNO = #{empno}
+	</select>
+	
+ 	<!-- 로그인 -->
+	<select id="Login" resultType="com.tp.domain.UsersVO" >
+			SELECT * FROM MEMBER WHERE id = #{id}
+	</select>
+	
+	
+	<!-- 아이디 중복검사 -->
+	<select id="idCheck" resultType="int">
+		select count(*) from member where id = #{memberId}
+	</select>
+  </mapper>
