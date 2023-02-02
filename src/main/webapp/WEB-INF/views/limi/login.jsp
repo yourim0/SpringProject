@@ -116,17 +116,16 @@ login_click = function(){
 <script>
 
 //로그인 실패 메서드
-var result = ${result};
 var admin_type = ${admin_type};
-console.log(result);
 console.log(admin_type);
 
 if(admin_type == 1){
 	alert("관리자 로그인 페이지로 이동합니다.");
 	location.href="/admin";
-}else if (!result){
+}else{
 	alert("로그인정보가 없습니다.");
-};   
+}; 
+
 </script>
 <script>
 //체크박스 클릭시 페이지 이동

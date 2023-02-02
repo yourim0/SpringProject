@@ -112,18 +112,16 @@
 	}
 </script>
 <script>
-	//로그인 실패 메서드
-	var result = ${result};
-	var admin_type = ${admin_type};
-	console.log(result);
-	console.log(admin_type);
 
-	if (admin_type == 0) {
-		alert("회원 로그인페이지로 이동합니다.");
-		location.href = "/login";
-	} else if (!result) {
-		alert("로그인정보가 없습니다.");
-	};
+var admin_type = ${admin_type};
+console.log(admin_type);
+
+if(admin_type == 0){
+	alert("회원 로그인 페이지로 이동합니다.");
+	location.href="/login";
+}else{
+	alert("로그인정보가 없습니다.");
+}; 
 </script>
 <script>
 	//체크박스 클릭시 페이지 이동

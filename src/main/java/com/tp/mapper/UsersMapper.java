@@ -18,4 +18,7 @@ public interface UsersMapper {
 	
 	//중복체크
 	public int idCheck(String memberId);
+	
+	//아이디 찾기
+	public String find_id(MemberVO vo);
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -60,8 +61,7 @@ public class MainController {
 
 		//lvo 정보 없을때
 		if(lvo == null) {
-			boolean result = false;
-			rttr.addFlashAttribute("result", result);
+			rttr.addFlashAttribute("admin_type", 0);
 			return "redirect:/login";
 		}
 		
@@ -86,7 +86,7 @@ public class MainController {
             return "redirect:/main";  // 메인페이지 이동       
 			}
         //불일치
-		}else{
+		}else{     
 			boolean result = false;
 			rttr.addFlashAttribute("result", result);
 			rttr.addFlashAttribute("admin_type", admin_type);
@@ -112,15 +112,14 @@ public class MainController {
 		String rawPw = ""; //입력받은 패스워드
         String encodePw = ""; //인코딩된 패스워드
         int admin_type;
-        
+  
 		UsersVO lvo = usersService.Login(vo);
 		System.out.println("해당 아이디 전체정보 : " + lvo);
 
 		//lvo 정보 없을때
 		if(lvo == null) {
-			boolean result = false;
-			rttr.addFlashAttribute("result", result);
-			return "redirect:/login";
+			rttr.addFlashAttribute("admin_type", 1);
+			return "redirect:/admin";
 		}
 		
 		//lvo 정보 있을때 
@@ -132,21 +131,17 @@ public class MainController {
 
 		//비밀번호 일치여부 판단
 		if(true == pwEncoder.matches(rawPw, encodePw)) {
-			if(admin_type == 0) {
-				boolean result = true;
-				rttr.addFlashAttribute("result", result);
+			if(admin_type == 1) {
 				rttr.addFlashAttribute("admin_type", admin_type);
-				log.info("admin0");
+				log.info("admin:0");
 				return "redirect:/admin"; 
 			}else {
-        	lvo.setPw("");                    // 인코딩된 비밀번호 정보 지움
-            session.setAttribute("lvo", lvo);     // session에 사용자의 정보 저장
-            return "redirect:/main";  // 메인페이지 이동       
+	        	lvo.setPw("");                    // 인코딩된 비밀번호 정보 지움
+	            session.setAttribute("lvo", lvo);     // session에 사용자의 정보 저장
+	            return "redirect:/main";  // 메인페이지 이동       
 			}
         //불일치
 		}else{
-			boolean result = false;
-			rttr.addFlashAttribute("result", result);
 			rttr.addFlashAttribute("admin_type", admin_type);
 			log.info("비번 불일치");
 			return "redirect:/admin";   // 로그인 페이지로 이동
@@ -154,12 +149,12 @@ public class MainController {
 	}
 	
 	//-------------아이디 찾기------------------
-	@RequestMapping("/findid")
-	public String findid() {
+	@RequestMapping(value="findid", method=RequestMethod.GET)
+	public String findidGET(HttpServletRequest reqest, Model model, UsersVO vo) {
 		
 		return "/limi/findid";
 	}
-	
+	//-------------아이디 찾기 결과------------------
 	@RequestMapping("/foundid")
 	public String foundid() {
 		

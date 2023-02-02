@@ -85,8 +85,8 @@ public class UsersMapperTest {
     	UsersVO vo = new UsersVO();    // MemberVO 변수 선언 및 초기화
         
         /* 올바른 아이디 비번 입력경우 */
-        vo.setId("fofo");
-        vo.setPw("1234");
+        vo.setId("admin");
+        vo.setPw("0000");
         
         usersmapper.Login(vo);
         System.out.println("결과 값 : " + usersmapper.Login(vo));
