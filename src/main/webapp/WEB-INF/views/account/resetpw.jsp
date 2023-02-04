@@ -36,12 +36,8 @@
 					</div>
 				</header>
 
-
+				<form id="reset_pw" method="post">
 				<fieldset>
-
-					<input type="hidden" name="SecurityToken"
-						value="8F28A1CF6B754BCAAEF47EDBEFC32C62">
-
 					<div class="table_css">
 						<div class="form_table">
 							<table class="fit no_thead">
@@ -52,13 +48,13 @@
 								<tbody>
 									<tr>
 										<th scope="row"><label for="name">새로운 비밀번호<em>*</em></label></th>
-										<td><input id="name" name="name"
+										<td><input id="pw" name="pw"
 											placeholder="새로운 비밀번호를 입력하세요." type="text" value=""
 											class="input_text"></td>
 									</tr>
 									<tr>
 										<th scope="row"><label for="name">비밀번호 확인<em>*</em></label></th>
-										<td><input id="name" name="name"
+										<td><input id="pw_ck" name="pw_ck"
 											placeholder="비밀번호를 입력하세요." type="text" value=""
 											class="input_text"></td>
 									</tr>
@@ -67,14 +63,59 @@
 						</div>
 
 						<div class="order_box">
-							<a href="#" onclick="$(this).parents('form').submit()"
-								class="true">변경하기</a>
+							<button type="button" class="resetPw_button" onclick="resetPw()">변경하기</button>
 						</div>
 
 					</div>
 				</fieldset>
+				</form>
 			</section>
 		</div>
 	</div>
 </div>
+<script>
+
+resetPw = function(){
+	var form = $("#reset_pw");
+	var pw = $("#pw").val();
+	var pw_ck = $("#pw_ck").val();
+	var RegExp = /^[a-zA-Z0-9]{4,12}$/; //pwassword 유효성 검사 정규식
+
+		if (pw == "") {
+			alert("비밀번호를 입력하세요.");
+			return false;
+		}
+		if (pw_ck == "") {
+			alert("비밀번호를 확인을 입력하세요.");
+			return false;
+		}
+		
+		if(pw != pw_ck){
+			alert('비밀번호가 일치하지 않습니다.');	
+			return false;
+		}
+
+		//패스워드 형식검사
+		if(!RegExp.test(pw_ck)){ 
+	    alert("Password는 4~12자의 영문 대소문자와 숫자로만 입력하여 주세요.");
+	    return false;
+	}
+		
+		form.submit();
+	}
+	
+</script>
+
+<script>
+
+var pw_result= ${result };
+console.log(pw_result);
+
+if(pw_result == 1){
+	alert("정상적으로 변경되었습니다.");
+	location.href="/login";
+}else{
+	alert("비밀번호 변경을 실패했습니다.")
+}
+</script>
 <%@include file="../include/footer.jsp"%>

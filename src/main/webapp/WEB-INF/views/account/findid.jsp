@@ -36,6 +36,8 @@
 				</header>
 				<!-- form  -->
 				<form id="find_id" method="post">
+				<input type="hidden" id="birth_date" name="birth_date" value= ""/>
+				
 				<fieldset>
 					<div class="table_css">
 						<div class="form_table">
@@ -47,7 +49,7 @@
 								<tbody>
 									<tr>
 										<th scope="row"><label for="name">사번<em>*</em></label></th>
-										<td><input id="name" name="name" placeholder="사번을 입력하세요."
+										<td><input id="empno" name="empno" placeholder="사번을 입력하세요."
 											type="text" value="" class="input_text"></td>
 									</tr>
 									<tr>
@@ -69,8 +71,7 @@
 							</table>
 						</div>
 						<div class="order_box">
-							<a href="foundid"
-								class="true">확인</a>
+						<button type="button" class="findid_button" onclick="findid()">확인</button>
 						</div>
 					</div>
 				</fieldset>
@@ -81,13 +82,14 @@
 </div>
 
 <script>
+//날짜selectbox option 
 $(document).ready(function(){ 
 	 var now = new Date();
 	    var year = now.getFullYear();
 	    var mon = (now.getMonth() + 1) > 9 ? ''+(now.getMonth() + 1) : '0'+(now.getMonth() + 1); 
 	    var day = (now.getDate()) > 9 ? ''+(now.getDate()) : '0'+(now.getDate());           
 	  //년도 selectbox만들기               
-	    for(var i = 1900 ; i <= year ; i++) {
+	    for(var i = 1970 ; i <= year ; i++) {
 	        $('#birthday_yyyy').append('<option value="' + i + '">' + i + '년</option>');    
 	    }
 
@@ -102,17 +104,57 @@ $(document).ready(function(){
 	        var dd = i > 9 ? i : "0"+i ;            
 	        $('#birthday_dd').append('<option value="' + dd + '">' + dd+ '일</option>');    
 	    }
-})
+});
 </script>
 <script>
-//아이디 
-var birthday_yyyy = $("#birthday_yyyy").val();
-var birthday_mm = $("#birthday_mm").val();
-var birthday_dd = $("#birthday_dd").val();
-var birthday = birthday_yyyy + birthday_mm + birthday_dd;
 
+findid = function(){
+	var form = $("#find_id");
+	var birthday_yyyy = $("#birthday_yyyy").val();
+	var birthday_mm = $("#birthday_mm").val();
+	var birthday_dd = $("#birthday_dd").val();
+	var birthday = birthday_yyyy + birthday_mm + birthday_dd;
+	
+	console.log("birthday : "+ birthday);
+	 $("#birth_date").val(birthday);
+	/* var birthday = birthday_yyyy + "-" + birthday_mm + "-" + birthday_dd; */
+	
+	var empno = document.getElementById("empno");
+	var name = document.getElementById("name");
+	var birth_date = document.getElementById("birth_date");
 
+		if (empno.value == "") {
+			alert("사번을 입력하세요.");
+			return false;
+		}
+		if (name.value == "") {
+			alert("이름을 입력하세요.");
+			return false;
+		}
+		if (!birthday_yyyy) {
+			alert("올바른 생년월일을 선택하세요.");
+			return false;
+		}
+		if (!birthday_mm) {
+			alert("올바른 생년월일을 선택하세요.");
+			return false;
+		}
+		if (!birthday_dd) {
+			alert("올바른 생년월일을 선택하세요.");
+			return false;
+		}
 
+		form.submit();
+	}
+</script>
+<script>
+
+var id_result= ${id_result };
+console.log(id_result);
+
+if(id_result == 1){
+	alert("아이디 정보가 없습니다.");
+}; 
 </script>
 
 <%@include file="../include/footer.jsp"%>

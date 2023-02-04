@@ -1,10 +1,16 @@
 package com.tp.main;
 
+import java.util.Random;
+
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -32,24 +38,78 @@ public class MainController {
 	
 	// 비밀번호 해시함수
 	BCryptPasswordEncoder pwEncoder = new BCryptPasswordEncoder();
-
+	
+	//메일 전송 
+	@Autowired
+	private JavaMailSender mailSender;
+	
 	@RequestMapping("/main")
 	public String main() {
 		
 		return "main";
 	}
 	
+	//-------------이메일인증-------------------
+	@RequestMapping(value = "/mailCheck", method=RequestMethod.POST)
+	@ResponseBody
+	public String mailCheckGET(UsersVO vo, RedirectAttributes rttr) throws Exception{
+		
+		//사번,아이디 확인해서 이메일 가져오기
+		String empno = vo.getEmpno();
+		String id = vo.getId();
+		
+		String email = usersService.email_Ck(vo);
+		log.info("조회 데이터" +email);
+		
+		//이메일 정보 없으면
+		if(email == null) {
+			log.info("이메일 정보없음");
+			return "1";
+		}
+		
+//		//이메일에 보낼 난수 생성
+		Random random = new Random();
+		int checkNum = random.nextInt(888888) + 111111;
+		log.info("생성된 인증번호 " + checkNum);
+//		
+//		//이메일 보내기
+		String subject = "인증번호 안내메일";
+		String content = "회원가입 인증 메일입니다. 인증번호는" + checkNum +" 입니다.해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
+		String from = "kyourim@gmail.com";
+		String to = email;
+		
+		try {
+		MimeMessage mail = mailSender.createMimeMessage();
+		MimeMessageHelper mailHelper = new MimeMessageHelper(mail,"UTF-8");
+	
+		mailHelper.setFrom(from);
+        mailHelper.setTo(to);
+        mailHelper.setSubject(subject);
+        mailHelper.setText(content, true);
+        
+        mailSender.send(mail);
+	
+	}catch(Exception e) {
+		e.printStackTrace();
+	}
+		
+		String num = Integer.toString(checkNum);
+		return num;
+	}
+	
+
 	//-------------유저 로그인-------------------
 	
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String loginGET(){
 		System.out.println("login 페이지 진입");
-		return "/limi/login";
+		return "/account/login";
 	}
 	
 	@RequestMapping(value="login", method=RequestMethod.POST)
 	public String loginPOST(HttpServletRequest request, UsersVO vo, RedirectAttributes rttr) throws Exception {
-		
+		//sersVO: 데이터를 전달받기/HttpServletRequest: 로그인 성공 시 session에 회원 정보를 저장/RedirectAttributes: 로그인 실패 시 리다이렉트 된 로그인 페이지에 실패를 의미하는 데이터를 전송
+
 		HttpSession session = request.getSession();
 		System.out.println("입력받은 정보 : " + vo);
 		String rawPw = ""; //입력받은 패스워드
@@ -101,7 +161,7 @@ public class MainController {
 	@RequestMapping(value="admin", method=RequestMethod.GET)
 	public String adminGET() {
 		System.out.println("관리자 login 페이지 진입");
-		return "/limi/admin";
+		return "/account/admin";
 	}
 
 	@RequestMapping(value="admin", method=RequestMethod.POST)
@@ -131,7 +191,7 @@ public class MainController {
 
 		//비밀번호 일치여부 판단
 		if(true == pwEncoder.matches(rawPw, encodePw)) {
-			if(admin_type == 1) {
+			if(admin_type == 0) {
 				rttr.addFlashAttribute("admin_type", admin_type);
 				log.info("admin:0");
 				return "redirect:/admin"; 
@@ -150,36 +210,82 @@ public class MainController {
 	
 	//-------------아이디 찾기------------------
 	@RequestMapping(value="findid", method=RequestMethod.GET)
-	public String findidGET(HttpServletRequest reqest, Model model, UsersVO vo) {
+	public String findidGET() {
+		log.info("아이디 찾기 페이지 진입");
 		
-		return "/limi/findid";
+		return "/account/findid";
 	}
+	
+	@RequestMapping(value="findid", method=RequestMethod.POST)
+	public String findidPOST(MemberVO vo, RedirectAttributes rttr) throws Exception{
+		log.info("아이디 찾기 POST");
+		String id = usersService.findid(vo);
+		log.info("id : " + id);
+		
+		if(id == null) {
+			rttr.addFlashAttribute("id_result", 1);
+			return "redirect:/findid";
+		}
+		
+		rttr.addFlashAttribute("id", id);
+		return "redirect:/foundid";
+	}
+	
 	//-------------아이디 찾기 결과------------------
 	@RequestMapping("/foundid")
 	public String foundid() {
 		
-		return "/limi/foundid";
+		return "/account/foundid";
 	}
 	
-	@RequestMapping("/findpw")
-	public String findpw() {
+	//-------------비밀번호 찾기------------------
+	@RequestMapping(value="/findpw",method=RequestMethod.GET)
+	public String findpwGET() {
 		
-		return "/limi/findpw";
-	}
-	
-	@RequestMapping("/resetpw")
-	public String resetpw() {
-		
-		return "/limi/resetpw";
+		return "/account/findpw";
 	}
 
+	@RequestMapping(value ="/findpw", method = RequestMethod.POST)
+	public String findpwPOST(HttpServletRequest request, UsersVO vo) {
+		HttpSession session = request.getSession();
+		log.info("findpw : " + vo); //ok
+		session.setAttribute("vo", vo); 
+		return "redirect:/resetpw";
+	}
+	
+	//-------------비밀번호 재설정------------------
+	@RequestMapping(value = "/resetpw", method = RequestMethod.GET)
+	public String resetpwGET(UsersVO vo) {
+		return "/account/resetpw";
+	}
+	
+	@RequestMapping(value = "/resetpw", method = RequestMethod.POST)
+	public String resetpwPOST(HttpServletRequest request, UsersVO vo, RedirectAttributes rttr) throws Exception {
+		HttpSession session = request.getSession();
+		UsersVO sessionVO = (UsersVO) session.getAttribute("vo");
+		String empno = sessionVO.getEmpno();
+		log.info("empno" + empno); //ok
+		vo.setEmpno(empno);
+		log.info("set후 : " + vo);
+		int result = usersService.resetPw(vo);
+		
+		if(result == 1) {
+			rttr.addFlashAttribute("result",result);
+		}else {
+			rttr.addFlashAttribute("result",0);
+
+		}
+		
+		
+		return "redirect:/login";
+	}
 	
 	//-------------약관동의-------------------
 
 	@RequestMapping(value="/join_agree", method = RequestMethod.GET)
 	public String agreeGET() {
 		System.out.println("약관동의 페이지 진입");
-		return "/limi/join_agree";
+		return "/account/join_agree";
 	}
 	
 	@RequestMapping(value ="/join_agree", method = RequestMethod.POST)
@@ -197,7 +303,7 @@ public class MainController {
 	@RequestMapping(value="/join_check", method = RequestMethod.GET)
 	public String join_check() {
 		System.out.println("사번체크 페이지 진입");
-		return "/limi/join_check";
+		return "/account/join_check";
 	}
 	
 	@RequestMapping(value="/join_check",method=RequestMethod.POST)
@@ -211,7 +317,7 @@ public class MainController {
 		if(lvo == null) {
 			boolean result = false;
 			rttr.addFlashAttribute("result", result);
-			//return "/limi/join_check";
+			//return "/account/join_check";
 			return "redirect:/join_check";
 		}
 		session.setAttribute("member", lvo);
@@ -219,13 +325,12 @@ public class MainController {
 	//	return null;
 	}
 	
-	
 	//--------------회원가입--------------------
 	
 	@RequestMapping(value = "/join_form", method = RequestMethod.GET)
 	public String joinGET() {
 		log.info("회원가입 페이지 진입");
-		return "/limi/join_form";
+		return "/account/join_form";
 	}
 	
 
@@ -234,6 +339,7 @@ public class MainController {
        
         //회원가입 쿼리 실행
         usersService.UserJoin(vo);
+        
         String id = vo.getId();
         rttr.addFlashAttribute("id", id);
         return "redirect:/join_done";
@@ -260,7 +366,7 @@ public class MainController {
 	public String join_done() {
 //	public String join_done(@RequestParam("id") String id) {
 //	System.out.println(id);
-		return "/limi/join_done";
+		return "/account/join_done";
 		
 	}
 	

@@ -52,11 +52,8 @@
 							<li><span>이용약관동의</span></li>
 							<li class="active"><strong>회원정보입력</strong></li>
 							<li><span>회원가입완료</span></li>
-
-
 						</ol>
 					</div>
-
 				</div>
 
 
@@ -79,7 +76,7 @@
 									</tr>
 									<tr>
 										<th scope="row"><label for="name">이름<em>*</em></label></th>
-										<td><input id="name" name="name" placeholder=<%=name %>
+										<td><input id="name" nam  e="name" placeholder=<%=name %>
 											type="text" value=<%=name %> class="input_text" readonly></td>
 									</tr>
 
@@ -222,7 +219,6 @@
 	
  	//아이디 중복체크
  	$('.id_double_button').click(function(){
- 		
  		var memberId = $('.id').val();
  		var data = {memberId : memberId}
 		var RegExp = /^[a-zA-Z0-9]{4,12}$/; //id와 pwassword 유효성 검사 정규식

@@ -37,12 +37,9 @@
 				<!-- form  -->
 				<fieldset>
 
-					<input type="hidden" name="SecurityToken"
-						value="8F28A1CF6B754BCAAEF47EDBEFC32C62">
-
 						<div class="result_table">
 							<table class="fit no_thead">
-								<span>회원님의 아이디는 <strong>댕댕이</strong> 입니다.</span>
+								<span>회원님의 아이디는 <strong>${id }</strong> 입니다.</span>
 								<hr />
 								<a href="/login">로그인하기</a>
 								<a href="/findpw">비밀번호 찾기</a>

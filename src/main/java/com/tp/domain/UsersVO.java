@@ -12,4 +12,8 @@ public class UsersVO {
 	private String phoneNum;
 	private Date regidate;
 	private int admin_type;
+	
+	
+	private String email;
+	
 }

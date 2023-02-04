@@ -21,4 +21,10 @@ public interface UsersMapper {
 	
 	//아이디 찾기
 	public String find_id(MemberVO vo);
+	
+	//비밀번호찾기 - 이메일조회
+	public String email_Ck(UsersVO vo);
+	
+	//비밀번호 재설정
+	public int resetPw(UsersVO vo);
 }

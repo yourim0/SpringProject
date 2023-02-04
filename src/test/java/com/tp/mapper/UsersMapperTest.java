@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tp.domain.MemberVO;
 import com.tp.domain.UsersVO;
 import com.tp.mapper.UsersMapper;
@@ -34,7 +35,7 @@ public class UsersMapperTest {
 //			user.setId("fofo");	
 //			user.setEmpno("3333");		
 //			user.setPw("1234");		
-//			user.setPhoneNum("010-4567-1234");
+//			user.setPhone4Num("010-4567-1234");
 //			
 //			
 //			log.info(user);
@@ -79,17 +80,43 @@ public class UsersMapperTest {
 
 	
     /* 로그인 쿼리 mapper 메서드 테스트 */
+//    @Test
+//    public void Login() throws Exception{
+//        
+//    	UsersVO vo = new UsersVO();    // MemberVO 변수 선언 및 초기화
+//        
+//        /* 올바른 아이디 비번 입력경우 */
+//        vo.setId("admin");
+//        vo.setPw("0000");
+//        
+//        usersmapper.Login(vo);
+//        System.out.println("결과 값 : " + usersmapper.Login(vo));
+//        
+//    }
+    
+//    @Test
+//    public void find_id() throws Exception{
+//    	
+//    	MemberVO vo = new MemberVO();    // MemberVO 변수 선언 및 초기
+//        vo.setEmpno("0000");
+//        vo.setBirth_date("19910101");
+//        vo.setName("admin");
+//        
+//        usersmapper.find_id(vo);
+//        System.out.println("결과 값 : " + usersmapper.find_id(vo));
+//        
+//    }
+    
+    
     @Test
-    public void Login() throws Exception{
-        
-    	UsersVO vo = new UsersVO();    // MemberVO 변수 선언 및 초기화
-        
-        /* 올바른 아이디 비번 입력경우 */
+    public void findpw() throws Exception{
+    	
+    	UsersVO vo = new UsersVO();    // MemberVO 변수 선언 및 초기
+        vo.setEmpno("0000");
         vo.setId("admin");
-        vo.setPw("0000");
         
-        usersmapper.Login(vo);
-        System.out.println("결과 값 : " + usersmapper.Login(vo));
+        usersmapper.email_Ck(vo);
+        System.out.println("결과 값 : " + usersmapper.email_Ck(vo));
         
     }
 }

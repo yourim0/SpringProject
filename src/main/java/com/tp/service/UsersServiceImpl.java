@@ -44,4 +44,32 @@ public class UsersServiceImpl implements UsersService  {
 	public UsersVO Login(UsersVO vo) throws Exception {
 		return mapper.Login(vo);
 	}
+
+	//아이디 찾기
+	@Override
+	public String findid(MemberVO vo) throws Exception {
+		return mapper.find_id(vo);
+	}
+
+	//이메일 
+	@Override
+	public String email_Ck(UsersVO vo) {
+		return mapper.email_Ck(vo);
+	}
+
+	//비밀번호 재설정
+	@Override
+	public int resetPw(UsersVO vo) throws Exception {
+		   String rawPw = "";            // 인코딩 전 비밀번호
+	       String encodePw = "";        // 인코딩 후 비밀번호
+	        
+	       rawPw = vo.getPw();            // 비밀번호 데이터 얻음
+	       encodePw = pwEncoder.encode(rawPw);        // 비밀번호 인코딩
+	       vo.setPw(encodePw);            // 인코딩된 비밀번호 member객체에 다시 저장
+	       
+	       int result = mapper.resetPw(vo);
+	       return result;
+	}
+	
+	
 }
