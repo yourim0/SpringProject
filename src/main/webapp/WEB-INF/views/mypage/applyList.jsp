@@ -54,13 +54,13 @@
 	<span>&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;</span>
 	
 	<!--중분류입니다.(회원정보 관리에 해당하는)-->
-	<select class="dropdown" name="level2" id="level2" onchange="B">
-	  <option class="dropbtn" value="1010">회원정보 수정</option>
-	  <option class="dropbtn" value="1020">비밀번호 관리</option>
-	  <option class="dropbtn" value="1030">로그아웃</option>
-	  <option class="dropbtn" value="1040">회원탈퇴</option>
-	  <option class="dropbtn" value="2010">내 신청 현황</option>
-	  <!--등등-->
+	<select class="dropdown" name="level2" id="level2" onchange="location.href=this.value">
+		<option class="dropbtn" value="/info">회원정보 수정</option> 
+		<option class="dropbtn" value="/password">비밀번호 관리</option>
+		<option class="dropbtn" value="/logout">로그아웃</option>
+		<option class="dropbtn" value="/withDrawal">회원탈퇴</option>
+		<option class="dropbtn" value="/applyList">내 신청 현황</option>
+		<!--등등-->
 	</select>
 	
 	<!--<div class="dropdown">
@@ -82,8 +82,6 @@
    	<hr />
 
    	<fieldset>
-		<!-- <legend>내 신청 현황</legend>
-			<input type="hidden" name="SecurityToken" value="E5136B34479301FA5FEE01E8E060E485"/> -->
 	<h4>내 신청 현황</h4>
 		<div class="container text-center">
 		  <div class="row row-cols-5" style="border:1px solid;">

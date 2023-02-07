@@ -40,4 +40,24 @@
 	<update id="resetPw">
 		UPDATE member SET pw = #{pw} WHERE empno = #{empno}
 	</update>
+	
+	<!-- mapage 비밀번호확인 -->
+	<select id = "mypage_Pw" resultType="String">
+	SELECT pw FROM member WHERE id = #{id}
+	</select>
+	
+	<!-- mypage 가입정보조회 -->
+	<select id = "mypage_info" resultType="com.tp.domain.MemberVO">
+	select * from compony where empno = #{empno}
+	</select>
+	
+	<!-- mypage 이메일 수정 -->
+	<update id = "mypage_update_email">
+	update compony set email = #{email} where empno = #{empno}
+	</update>
+	
+	<!-- mypage 휴대폰번호 수정 -->
+	<update id = "mypage_update_phoneNum">
+	update member set phoneNum  = #{phoneNum} where id = #{id}
+	</update>
   </mapper>

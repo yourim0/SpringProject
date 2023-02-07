@@ -70,6 +70,33 @@ public class UsersServiceImpl implements UsersService  {
 	       int result = mapper.resetPw(vo);
 	       return result;
 	}
+
+	//마이페이지 비밀번호 
+	@Override
+	public String mypage_Pw(String id) throws Exception {
+		
+		return mapper.mypage_Pw(id);
+	}
+
+	@Override
+	public MemberVO mypage_info(String empno) throws Exception {
+		
+		return mapper.mypage_info(empno);
+	}
+
+	@Override
+	public int mypage_update_email(UsersVO vo) throws Exception {
+		int result = mapper.mypage_update_email(vo);
+		return result;
+	}
+
+	@Override
+	public int mypage_update_phoneNum(UsersVO vo) throws Exception {
+		int result = mapper.mypage_update_phoneNum(vo);
+
+		return result;
+	}
 	
+
 	
 }

@@ -27,5 +27,17 @@ public interface UsersService {
 
 	//비밀번호 재설정
 	public int resetPw(UsersVO vo) throws Exception;
+	
+	//마이페이지 비밀번호
+	public String mypage_Pw(String id) throws Exception;
+	
+	//마이페이지 회사 정보조회
+	public MemberVO mypage_info(String empno) throws Exception;
+
+	//마이페이지 
+	public int mypage_update_email(UsersVO vo) throws Exception;
+	
+	//마이페이지 휴대폰번호 수정
+	public int mypage_update_phoneNum(UsersVO vo) throws Exception;
 
 }

@@ -4,11 +4,11 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ page import = "com.tp.domain.MemberVO" %> 
-<%=session.getAttribute("member") %>
+<%@ page import="com.tp.domain.MemberVO"%>
+<%=session.getAttribute("member")%>
 <%
 	request.setCharacterEncoding("UTF-8");
-	MemberVO vo = (MemberVO)session.getAttribute("member");
+	MemberVO vo = (MemberVO) session.getAttribute("member");
 	String empno = vo.getEmpno();
 	String name = vo.getName();
 %>
@@ -59,81 +59,78 @@
 
 				<!-- form  -->
 
-				
-					<form id="join_form" method="post">
-						<input type="hidden" id="phoneNum" name="phoneNum" value= ""/>
-						<div class="form_table">
-							<table class="fit no_thead">
-								<colgroup>
-									<col width="200">
-									<col>
-								</colgroup>
-								<tbody>
-									<tr>
-										<th scope="row"><label for="name">사번<em>*</em></label></th>
-										<td><input id="empno" name="empno" placeholder=<%=empno %>
-											type="text" value=<%=empno %> class="input_text" readonly></td>
-									</tr>
-									<tr>
-										<th scope="row"><label for="name">이름<em>*</em></label></th>
-										<td><input id="name" nam  e="name" placeholder=<%=name %>
-											type="text" value=<%=name %> class="input_text" readonly></td>
-									</tr>
 
-									<tr>
-										<th scope="row"><label for="id">아이디<em>*</em></label></th>
-										<td><input id="id" name="id" placeholder="아이디를 입력하세요."
-											type="text" class="id">
-										<button type="button" class="id_double_button">중복확인</button>
-										<input type="hidden" name="checked_id" value="">
-										
-										</td>
-										
-									</tr>
-									
-									<!-- limi -->
+				<form id="join_form" method="post">
+					<input type="hidden" id="phoneNum" name="phoneNum" value="" />
+					<div class="form_table">
+						<table class="fit no_thead">
+							<colgroup>
+								<col width="200">
+								<col>
+							</colgroup>
+							<tbody>
+								<tr>
+									<th scope="row"><label for="name">사번<em>*</em></label></th>
+									<td><input id="empno" name="empno" placeholder=<%=empno%>
+										type="text" value=<%=empno%> class="input_text" readonly></td>
+								</tr>
+								<tr>
+									<th scope="row"><label for="name">이름<em>*</em></label></th>
+									<td><input id="name" nam e="name" placeholder=<%=name%>
+										type="text" value=<%=name%> class="input_text" readonly></td>
+								</tr>
 
-									<tr>
-								
-										<th scope="row"><label for="pw">비밀번호<em>*</em></label></th>
-										<td>
-										<input id="pw" name="pw" placeholder="비밀번호를 입력하세요."
-											type="text" value="" class="pw"></td>
-									</tr>
-									<tr>
-										<th scope="row"><label for="passwordck">비밀번호 확인<em>*</em></label></th>
-										<td><input id="pwck_input" name="pwck_input"
-											placeholder="비밀번호를 입력하세요." type="text" value=""
-											class="pwck_input">
-											
-										<span class="pwck_input_re_1" style="display:none;">비밀번호가 일치합니다.</span>
-             							<span class="pwck_input_re_2" style="display:none;">비밀번호가 일치하지 않습니다.</span></td>
-									</tr>
-									<tr>
-										<th scope="row">휴대전화번호<em>*</em></th>
-										<td><select id="tel_1" name="tel_1" title="휴대전화번호 앞자리 선택">
-												<option value="010">010</option>
-												<option value="011">011</option>
-												<option value="016">016</option>
-												<option value="017">017</option>
-												<option value="018">018</option>
-												<option value="019">019</option>
-										</select> <input id="tel_2" maxlength="4" name="tel_2" class="number input_text"
-											title="휴대전화번호 중간자리 3~4자리 입력" type="text" value="" size="4"
-											maxlength="4"> <input id="tel_3" name="tel_3" maxlength="4"
-											class="number input_text" title="휴대전화번호 마지막자리 4자리 입력"
-											type="text" value="" size="4" maxlength="4"></td>
-									</tr>
+								<tr>
+									<th scope="row"><label for="id">아이디<em>*</em></label></th>
+									<td><input id="id" name="id" placeholder="아이디를 입력하세요."
+										type="text" class="id">
+										<button type="button" class="id_double_button">중복확인</button> <input
+										type="hidden" name="checked_id" value=""></td>
 
-								</tbody>
-							</table>
-						</div>
-						<p class="order_box">
-						<button type="button" class="join_button"
-							onclick="join_check()">가입하기</button>
-							
-							<!--  <a href="/join_form" class="true">취소</a>-->
-						</p>
+								</tr>
+
+								<!-- limi -->
+
+								<tr>
+
+									<th scope="row"><label for="pw">비밀번호<em>*</em></label></th>
+									<td><input id="pw" name="pw" placeholder="비밀번호를 입력하세요."
+										type="text" value="" class="pw"></td>
+								</tr>
+								<tr>
+									<th scope="row"><label for="passwordck">비밀번호 확인<em>*</em></label></th>
+									<td><input id="pwck_input" name="pwck_input"
+										placeholder="비밀번호를 입력하세요." type="text" value=""
+										class="pwck_input"> <span class="pwck_input_re_1"
+										style="display: none;">비밀번호가 일치합니다.</span> <span
+										class="pwck_input_re_2" style="display: none;">비밀번호가
+											일치하지 않습니다.</span></td>
+								</tr>
+								<tr>
+									<th scope="row">휴대전화번호<em>*</em></th>
+									<td><select id="tel_1" name="tel_1" title="휴대전화번호 앞자리 선택">
+											<option value="010">010</option>
+											<option value="011">011</option>
+											<option value="016">016</option>
+											<option value="017">017</option>
+											<option value="018">018</option>
+											<option value="019">019</option>
+									</select> <input id="tel_2" maxlength="4" name="tel_2"
+										class="number input_text" title="휴대전화번호 중간자리 3~4자리 입력"
+										type="text" value="" size="4" maxlength="4"> <input
+										id="tel_3" name="tel_3" maxlength="4"
+										class="number input_text" title="휴대전화번호 마지막자리 4자리 입력"
+										type="text" value="" size="4" maxlength="4"></td>
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+					<p class="order_box">
+						<button type="button" class="join_button" onclick="join_check()">가입하기</button>
+
+						<!--  <a href="/join_form" class="true">취소</a>-->
+					</p>
 		</div>
 		</form>
 
@@ -150,18 +147,18 @@
 		var id = document.getElementById("id");
 		var pw = document.getElementById("pw");
 		var pwck = document.getElementById("pwck_input");
-		
+
 		var RegExp = /^[a-zA-Z0-9]{4,12}$/; //id와 pwassword 유효성 검사 정규식
 		var RegExpTest = /^[0-9]{4}$/; //전화번호 유효성검사
-		
-		var tel_1 =$("#tel_1").val();
-		var tel_2 =$("#tel_2").val();
-		var tel_3 =$("#tel_3").val();
-		var phoneNum ="";
-		
+
+		var tel_1 = $("#tel_1").val();
+		var tel_2 = $("#tel_2").val();
+		var tel_3 = $("#tel_3").val();
+		var phoneNum = "";
+
 		phoneNum = tel_1 + "-" + tel_2 + "-" + tel_3;
 		//console.log("phonenum : " + phoneNum);
-		 $("#phoneNum").val(phoneNum);
+		$("#phoneNum").val(phoneNum);
 
 		if (id.value == "") {
 			alert("아이디를 입력하세요.");
@@ -188,84 +185,84 @@
 			return false;
 		}
 		//아이디 중복체크 여부
-	   	if($("input[name='checked_id']").val()==''){
-	        alert('아이디 중복체크를 해주세요.');
-	        $("input[name='checked_id']").eq(0).focus();
-	        return false;
-	  	}
+		if ($("input[name='checked_id']").val() == '') {
+			alert('아이디 중복체크를 해주세요.');
+			$("input[name='checked_id']").eq(0).focus();
+			return false;
+		}
 		//비밀번호 확인 일치 여부
-		if(pw.value != pwck.value){
-			alert('올바른 비밀번호를 입력해주세요.');	
+		if (pw.value != pwck.value) {
+			alert('올바른 비밀번호를 입력해주세요.');
 			return false;
 		}
 
-      	//패스워드 형식검사
-        if(!RegExp.test(pwck.value)){ 
-            alert("Password는 4~12자의 영문 대소문자와 숫자로만 입력하여 주세요.");
-            return false;
-        }
+		//패스워드 형식검사
+		if (!RegExp.test(pwck.value)) {
+			alert("Password는 4~12자의 영문 대소문자와 숫자로만 입력하여 주세요.");
+			return false;
+		}
 		//휴대폰 번호 검사
-        if (!RegExpTest.test(tel_2)){
-        	alert('숫자 4자리를 입력해주세요.');
-            return false;
-        }
-        if (!RegExpTest.test(tel_3)){
-        	alert('숫자 4자리를 입력해주세요.');
-            return false;
-        }
-   		
+		if (!RegExpTest.test(tel_2)) {
+			alert('숫자 4자리를 입력해주세요.');
+			return false;
+		}
+		if (!RegExpTest.test(tel_3)) {
+			alert('숫자 4자리를 입력해주세요.');
+			return false;
+		}
+
 		form.submit();
 	}
-	
- 	//아이디 중복체크
- 	$('.id_double_button').click(function(){
- 		var memberId = $('.id').val();
- 		var data = {memberId : memberId}
+
+	//아이디 중복체크
+	$('.id_double_button').click(function() {
+		var memberId = $('.id').val();
+		var data = {
+			memberId : memberId
+		}
 		var RegExp = /^[a-zA-Z0-9]{4,12}$/; //id와 pwassword 유효성 검사 정규식
 		//아이디 형식검사
-       
+
 		if (id.value == "") {
 			alert("아이디를 입력하세요.");
 			return false;
-		}else if(!RegExp.test(memberId)){ 
-            alert("ID는 4~12자의 영문 대소문자와 숫자로만 입력하여 주세요.");        
-            return false;
-        }else if(memberId.match(RegExp)){
- 		$.ajax({
- 			type:"post",
- 			url:"/memberIdChk",
- 			data:data,
- 			success: function(result){
- 				if(result == "fail"){
- 					alert("사용 불가한 아이디입니다.");
- 					$('.id').val("");
- 				}else {
- 			 		//체크 여부 확인
- 					$("input[name=checked_id]").val('y');
- 					alert("사용 가능한 아이디 입니다.");
- 				}
- 				}
- 		
- 		});
-        }
- 	});
-	
-	//비밀번호 확인
-$('.pwck_input').on("propertychange change keyup paste input", function(){
- 
-    var pw = $('.pw').val();
-    var pwck = $('.pwck_input').val();
- 
-    if(pw == pwck){
-        $('.pwck_input_re_1').css('display','block');
-        $('.pwck_input_re_2').css('display','none');
-    }else{
-        $('.pwck_input_re_1').css('display','none');
-        $('.pwck_input_re_2').css('display','block');
-    }        
-});    
-	
+		} else if (!RegExp.test(memberId)) {
+			alert("ID는 4~12자의 영문 대소문자와 숫자로만 입력하여 주세요.");
+			return false;
+		} else if (memberId.match(RegExp)) {
+			
+			$.ajax({
+				type : "post",
+				url : "/memberIdChk",
+				data : data,
+				success : function(result) {
+					if (result == "fail") {
+						alert("사용 불가한 아이디입니다.");
+						$('.id').val("");
+					} else {
+						//체크 여부 확인
+						$("input[name=checked_id]").val('y');
+						alert("사용 가능한 아이디 입니다.");
+					}
+				}
 
- 
+			});
+		}
+	});
+
+	//비밀번호 확인
+	$('.pwck_input').on("propertychange change keyup paste input", function() {
+
+		var pw = $('.pw').val();
+		var pwck = $('.pwck_input').val();
+
+		if (pw == pwck) {
+			$('.pwck_input_re_1').css('display', 'block');
+			$('.pwck_input_re_2').css('display', 'none');
+		} else {
+			$('.pwck_input_re_1').css('display', 'none');
+			$('.pwck_input_re_2').css('display', 'block');
+		}
+	});
 </script>
 <%@include file="../include/footer.jsp"%>

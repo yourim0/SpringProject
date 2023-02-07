@@ -28,7 +28,6 @@ import com.tp.service.UsersService;
 
 import lombok.extern.log4j.Log4j;
 
-
 @Controller
 //@RequestMapping("/home/*")
 @Log4j
@@ -99,7 +98,6 @@ public class MainController {
 	
 
 	//-------------유저 로그인-------------------
-	
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String loginGET(){
 		System.out.println("login 페이지 진입");
@@ -142,7 +140,7 @@ public class MainController {
 				return "redirect:/login"; 
 			}else {
         	lvo.setPw("");                    // 인코딩된 비밀번호 정보 지움
-            session.setAttribute("lvo", lvo);     // session에 사용자의 정보 저장
+            session.setAttribute("lvo", lvo);  // session에 사용자의 정보 저장
             return "redirect:/main";  // 메인페이지 이동       
 			}
         //불일치
@@ -157,7 +155,6 @@ public class MainController {
 	
 	
 	//-------------관리자 로그인-------------------
-
 	@RequestMapping(value="admin", method=RequestMethod.GET)
 	public String adminGET() {
 		System.out.println("관리자 login 페이지 진입");
@@ -273,15 +270,11 @@ public class MainController {
 			rttr.addFlashAttribute("result",result);
 		}else {
 			rttr.addFlashAttribute("result",0);
-
 		}
-		
-		
 		return "redirect:/login";
 	}
 	
 	//-------------약관동의-------------------
-
 	@RequestMapping(value="/join_agree", method = RequestMethod.GET)
 	public String agreeGET() {
 		System.out.println("약관동의 페이지 진입");
@@ -326,7 +319,6 @@ public class MainController {
 	}
 	
 	//--------------회원가입--------------------
-	
 	@RequestMapping(value = "/join_form", method = RequestMethod.GET)
 	public String joinGET() {
 		log.info("회원가입 페이지 진입");
@@ -361,14 +353,109 @@ public class MainController {
 	}
 	
 	//--------------회원가입 완료--------------------
-
 	@RequestMapping("/join_done")
 	public String join_done() {
-//	public String join_done(@RequestParam("id") String id) {
-//	System.out.println(id);
+
 		return "/account/join_done";
 		
 	}
-	
 
+	
+	//--------------mypage--------------------
+	@RequestMapping(value = "/mypage", method=RequestMethod.GET)
+	public String mypageGET(){
+		log.info("mypage 진입");
+		
+		return "/mypage/mypage";
+	}
+	
+	
+	@RequestMapping(value = "/mypage", method=RequestMethod.POST)
+	public String mypagePOST(HttpServletRequest request, RedirectAttributes rttr) throws Exception{
+		log.info("POST 진입");
+		HttpSession session = request.getSession();
+		UsersVO lvo = (UsersVO)session.getAttribute("lvo");
+		String id = lvo.getId();
+		String encodePw = (String)usersService.mypage_Pw(id); //입력받은
+		log.info(encodePw);
+		String rawPw = request.getParameter("user_password");
+		log.info("raw:"+ rawPw);
+		
+		if(true == pwEncoder.matches(rawPw, encodePw)) {
+			rttr.addFlashAttribute("result",1);
+			return "redirect:/mypage";
+
+		}else {
+			rttr.addFlashAttribute("result",0);
+			return "redirect:/mypage";
+
+		}
+	}
+	//--------------mypage_info--------------------
+	
+	@RequestMapping(value = "/info", method=RequestMethod.GET)
+	public String infoGET(HttpServletRequest request, RedirectAttributes rttr) throws Exception{
+		log.info("info 진입");
+		
+		HttpSession session = request.getSession();
+		UsersVO lvo = (UsersVO)session.getAttribute("lvo");
+		String empno = (String)lvo.getEmpno();
+
+		MemberVO mvo = usersService.mypage_info(empno);
+		session.setAttribute("mvo", mvo);
+		
+		return "/mypage/info";
+	}
+	
+	@RequestMapping(value="/info", method=RequestMethod.POST)
+	public String infoPOST(HttpServletRequest request, UsersVO vo,RedirectAttributes rttr) throws Exception{
+		
+		HttpSession session = request.getSession();
+		String email = vo.getEmail();
+		String phoneNum = vo.getPhoneNum();
+		String id = vo.getId();
+		
+        UsersVO lvo = (UsersVO)session.getAttribute("lvo");
+        String empno = lvo.getEmpno();
+        vo.setEmpno(empno);
+		
+		int result_email = usersService.mypage_update_email(vo);
+		int result_phoneNum = usersService.mypage_update_phoneNum(vo);
+		
+		log.info("result_email"+result_email);
+		log.info("result_phoneNum"+result_phoneNum);
+
+		lvo.setEmail(email);
+		lvo.setPhoneNum(phoneNum);
+		
+        return "redirect:/info";
+	}
+	
+	
+	//--------------mypage_applyList--------------------
+	@RequestMapping(value = "/applyList", method=RequestMethod.GET)
+	public String applyList() throws Exception{
+		log.info("applyList 진입");
+		
+		return "/mypage/applyList";
+	}
+	@RequestMapping(value = "/password", method=RequestMethod.GET)
+	public String password() throws Exception{
+		log.info("password 진입");
+		
+		return "/mypage/password";
+	}
+	
+	@RequestMapping(value = "/withDrawal", method=RequestMethod.GET)
+	public String withDrawal() throws Exception{
+		log.info("applyList 진입");
+		
+		return "/mypage/withDrawal";
+	}
+	@RequestMapping(value = "/logout", method=RequestMethod.GET)
+	public String logout() throws Exception{
+		log.info("applyList 진입");
+		
+		return "/mypage/logout";
+	}
 }

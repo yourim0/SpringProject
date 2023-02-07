@@ -27,4 +27,18 @@ public interface UsersMapper {
 	
 	//비밀번호 재설정
 	public int resetPw(UsersVO vo);
+	
+	//마이페이지 비밀번호
+	public String mypage_Pw(String id);
+
+	//마이페이지
+	public MemberVO mypage_info(String empno);
+	
+	//마이페이지 이메일 수정
+	public int mypage_update_email(UsersVO vo);
+	
+	//마이페이지 전화번호 수정
+	public int mypage_update_phoneNum(UsersVO vo);
+
+	
 }

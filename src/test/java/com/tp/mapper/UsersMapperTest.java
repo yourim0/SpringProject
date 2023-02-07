@@ -108,15 +108,28 @@ public class UsersMapperTest {
 //    }
     
     
+//    @Test
+//    public void findpw() throws Exception{
+//    	
+//    	UsersVO vo = new UsersVO();    // MemberVO 변수 선언 및 초기
+//        vo.setEmpno("0000");
+//        vo.setId("admin");
+//        
+//        usersmapper.email_Ck(vo);
+//        System.out.println("결과 값 : " + usersmapper.email_Ck(vo));
+//        
+//    }
+    
+    
     @Test
-    public void findpw() throws Exception{
+    public void mypage_update() throws Exception{
     	
     	UsersVO vo = new UsersVO();    // MemberVO 변수 선언 및 초기
-        vo.setEmpno("0000");
-        vo.setId("admin");
+        vo.setPhoneNum("010-0000-0000");
+        vo.setId("yourim");
         
-        usersmapper.email_Ck(vo);
-        System.out.println("결과 값 : " + usersmapper.email_Ck(vo));
+        usersmapper.mypage_update_phoneNum(vo);
+        System.out.println("결과 값 : " + usersmapper.mypage_update_phoneNum(vo));
         
     }
 }

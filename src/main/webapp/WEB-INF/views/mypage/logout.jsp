@@ -21,21 +21,7 @@
    </div>
    <hr />
    <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; </span>
-   	<!-- <div class="dropdown">
-      <span class="dropbtn">회원정보 관리</span>
-      <div class="dropdown-content">
-        <a href="#">회원정보 관리</a>
-        <a href="#">동호회 신청 현황</a>
-      </div> 
-   	</div>
-   	<span>|</span>
-   	<div class="dropdown">
-      <span class="dropbtn">회원정보 수정</span>
-      <div class="dropdown-content">
-        <a href="#">회원정보 관리</a>
-        <a href="#">동호회 신청 현황</a>
-      </div> 
-   	</div> -->
+
    	
    	<!-- 집 아이콘 -->
    	<svg xmlns="http://www.w3.org/2000/svg" width="22" height="19" fill="currentColor" class="bi bi-globe2" viewBox="0 0 16 16">
@@ -54,13 +40,13 @@
 	<span>&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;</span>
 	
 	<!--중분류입니다.(회원정보 관리에 해당하는)-->
-	<select class="dropdown" name="level2" id="level2" onchange="B">
-	  <option class="dropbtn" value="1010">회원정보 수정</option>
-	  <option class="dropbtn" value="1020">비밀번호 관리</option>
-	  <option class="dropbtn" value="1030">로그아웃</option>
-	  <option class="dropbtn" value="1040">회원탈퇴</option>
-	  <option class="dropbtn" value="2010">내 신청 현황</option>
-	  <!--등등-->
+	<select class="dropdown" name="level2" id="level2" onchange="location.href=this.value">
+		<option class="dropbtn" value="/info">회원정보 수정</option> 
+		<option class="dropbtn" value="/password">비밀번호 관리</option>
+		<option class="dropbtn" value="/logout">로그아웃</option>
+		<option class="dropbtn" value="/withDrawal">회원탈퇴</option>
+		<option class="dropbtn" value="/applyList">내 신청 현황</option>
+		<!--등등-->
 	</select>
 	
 	<!--<div class="dropdown">
