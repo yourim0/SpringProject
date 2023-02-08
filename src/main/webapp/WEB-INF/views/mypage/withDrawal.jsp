@@ -29,21 +29,17 @@
 	</svg>
 	
 	<span>&nbsp;&nbsp;&nbsp;</span>
-		<!--대분류입니다.--->
-	<select class="dropdown" name="sel_one" id="sel_one" onchange="">
-		<option class="dropbtn" value="10">회원정보 관리</option>
-		<option class="dropbtn" value="20">동호회 신청 현황</option>
-		<!--등등-->
+	<!--대분류입니다.--->
+	<select class="dropdown" name="mainCategory" id="mainCategory" onchange="">
+		<option value="">메뉴 선택</option>
+		
 	</select>
 
 	<span>&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;</span>
 
 	<!--중분류입니다.(회원정보 관리에 해당하는)-->
-	<select class="dropdown" name="sel_two" id="sel_two" onchange="location.href=this.value">
-		<option class="dropbtn" value="/info">회원정보 수정</option> 
-		<option class="dropbtn" value="/password">비밀번호 관리</option>
-		<option class="dropbtn" value="/withDrawal">회원탈퇴</option>
-		<!--등등-->
+	<select class="dropdown" name="subCategory" id="subCategory" onchange="location.href=this.value">
+		<option value="">메뉴 선택</option>
 	</select>
    	<hr />
 
@@ -92,5 +88,79 @@
 	    </div>
 	  </div>
 	</div>
+	
+<script type="text/javascript">
+$(document).ready(function() {
+      
+    //Main 카테고리
+    var mainArray = new Array();
+    var mainObject = new Object();
+      
+    mainObject = new Object();
+    mainObject.main_category_id = "1";
+    mainObject.main_category_name = "회원정보 관리";
+    mainArray.push(mainObject);
+      
+    mainObject = new Object();
+    mainObject.main_category_id = "2";
+    mainObject.main_category_name = "동호회 관리";
+    mainArray.push(mainObject);
+      
+    //Sub 카테고리 셋팅
+    var subArray = new Array();
+    var subObject = new Object();
+      
+    //1에 해당하는 sub category 리스트
+    subObject = new Object();
+    subObject.main_category_id = "1";
+    subObject.sub_category_id = "/info"
+    subObject.sub_category_name = "회원정보 수정"
+    subArray.push(subObject);
+      
+    subObject = new Object();
+    subObject.main_category_id = "1";
+    subObject.sub_category_id = "/password"
+    subObject.sub_category_name = "비밀번호 관리"
+    subArray.push(subObject);
+      
+    subObject = new Object();
+    subObject.main_category_id = "1";
+    subObject.sub_category_id = "/withDrawal"
+    subObject.sub_category_name = "회원 탈퇴"
+    subArray.push(subObject);
+      
+    //2에 해당하는 sub category 리스트
+    subObject = new Object();
+    subObject.main_category_id = "2";
+    subObject.sub_category_id = "/applyList"
+    subObject.sub_category_name = "활동 중 동호회"
+    subArray.push(subObject);
 
+    //메인 카테고리
+    var mainCategorySelectBox = $("select[name='mainCategory']");
+      
+    for(var i=0;i<mainArray.length;i++){
+        mainCategorySelectBox.append("<option value='"+mainArray[i].main_category_id+"'>"+mainArray[i].main_category_name+"</option>");
+    }
+      
+    //main카테고리 선택 후 sub생성
+    $(document).on("change","select[name='mainCategory']",function(){
+        //두번째 셀렉트 박스 삭제
+        var subCategorySelectBox = $("select[name='subCategory']");
+        subCategorySelectBox.children().remove(); //기존 리스트 삭제
+          
+        //선택한 첫번째 박스의 값을 가져와 일치하는 값을 두번째 셀렉트 박스에 넣어
+        $("option:selected", this).each(function(){
+            var selectValue = $(this).val(); //main category 에서 선택한 값
+            subCategorySelectBox.append("<option value=''>전체</option>");
+            for(var i=0;i<subArray.length;i++){
+                if(selectValue == subArray[i].main_category_id){
+                    subCategorySelectBox.append("<option value='"+subArray[i].sub_category_id+"'>"+subArray[i].sub_category_name+"</option>");
+                }
+            }
+        });
+          
+    });
+});
+</script>
 <%@include file="../include/footer.jsp"%>
