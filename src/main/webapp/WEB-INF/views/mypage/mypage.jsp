@@ -36,7 +36,7 @@
 	<span>&nbsp;&nbsp;&nbsp;</span>
 
 	<!--대분류입니다.--->
-	<select class="dropdown" name="level1" id="level1" onchange="A">
+	<select class="dropdown" name="sel_one" id="sel_one" onchange="">
 		<option class="dropbtn" value="10">회원정보 관리</option>
 		<option class="dropbtn" value="20">동호회 신청 현황</option>
 		<!--등등-->
@@ -45,12 +45,10 @@
 	<span>&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;</span>
 
 	<!--중분류입니다.(회원정보 관리에 해당하는)-->
-	<select class="dropdown" name="level2" id="level2" onchange="location.href=this.value">
-		<option class="dropbtn" value="/info">회원정보 수정</option> 
+	<select class="dropdown" name="sel_two" id="sel_two" onchange="location.href=this.value">
+		<option class="dropbtn" value="/info" selected>회원정보 수정</option> 
 		<option class="dropbtn" value="/password">비밀번호 관리</option>
-		<option class="dropbtn" value="/logout">로그아웃</option>
-		<option class="dropbtn" value="/withDrawal">회원탈퇴</option>
-		<option class="dropbtn" value="/applyList">내 신청 현황</option>
+		<option class="dropbtn" ]value="/withDrawal">회원탈퇴</option>
 		<!--등등-->
 	</select>
 
@@ -117,4 +115,5 @@ check_pw = function(){
 		alert("비밀번호를 확인해주세요.");
 	}
 </script>
+
 <%@include file="../include/footer.jsp"%>

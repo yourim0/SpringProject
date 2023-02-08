@@ -21,21 +21,7 @@
    </div>
    <hr />
    <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; </span>
-   	<!-- <div class="dropdown">
-      <span class="dropbtn">회원정보 관리</span>
-      <div class="dropdown-content">
-        <a href="#">회원정보 관리</a>
-        <a href="#">동호회 신청 현황</a>
-      </div> 
-   	</div>
-   	<span>|</span>
-   	<div class="dropdown">
-      <span class="dropbtn">회원정보 수정</span>
-      <div class="dropdown-content">
-        <a href="#">회원정보 관리</a>
-        <a href="#">동호회 신청 현황</a>
-      </div> 
-   	</div> -->
+
    	
    	<!-- 집 아이콘 -->
    	<svg xmlns="http://www.w3.org/2000/svg" width="22" height="19" fill="currentColor" class="bi bi-globe2" viewBox="0 0 16 16">
@@ -43,53 +29,30 @@
 	</svg>
 	
 	<span>&nbsp;&nbsp;&nbsp;</span>
-	
-	<!--대분류입니다.--->
-	<select class="dropdown" name="level1" id="level1" onchange="A">
-	  <option class="dropbtn" value="10">회원정보 관리</option>
-	  <option class="dropbtn" value="20">동호회 신청 현황</option>
-	  <!--등등-->
-	</select>
-	
-	<span>&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;</span>
-	
-	<!--중분류입니다.(회원정보 관리에 해당하는)-->
-	<select class="dropdown" name="level2" id="level2" onchange="location.href=this.value">
-		<option class="dropbtn" value="/info">회원정보 수정</option> 
-		<option class="dropbtn" value="/password">비밀번호 관리</option>
-		<option class="dropbtn" value="/logout">로그아웃</option>
-		<option class="dropbtn" value="/withDrawal">회원탈퇴</option>
-		<option class="dropbtn" value="/applyList">내 신청 현황</option>
+		<!--대분류입니다.--->
+	<select class="dropdown" name="sel_one" id="sel_one" onchange="">
+		<option class="dropbtn" value="10">회원정보 관리</option>
+		<option class="dropbtn" value="20">동호회 신청 현황</option>
 		<!--등등-->
 	</select>
-	
-	<!--<div class="dropdown">
-	<button onclick="myFunction()" class="dropbtn">Dropdown</button>
-	  <div id="myDropdown" class="dropdown-content">
-	    <a href="#home">Home</a>
-	    <a href="#about">About</a>
-	    <a href="#contact">Contact</a>
-	  </div>
-	</div>
-	<div class="dropdown">
-	<button onclick="myFunction2()" class="dropbtn">Dropdown</button>
-	  <div id="myDropdown2" class="dropdown-content">
-	    <a href="#home">Home</a>
-	    <a href="#about">About</a>
-	    <a href="#contact">Contact</a>
-	  </div>
-	</div> -->
+
+	<span>&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;</span>
+
+	<!--중분류입니다.(회원정보 관리에 해당하는)-->
+	<select class="dropdown" name="sel_two" id="sel_two" onchange="location.href=this.value">
+		<option class="dropbtn" value="/info">회원정보 수정</option> 
+		<option class="dropbtn" value="/password">비밀번호 관리</option>
+		<option class="dropbtn" value="/withDrawal">회원탈퇴</option>
+		<!--등등-->
+	</select>
    	<hr />
 
    	<fieldset>
-		<!-- <legend>회원 비밀번호 확인</legend>
-			<input type="hidden" name="SecurityToken" value="E5136B34479301FA5FEE01E8E060E485"/> -->
 	<div class="messagebox">
 		<div>
 			<ul>
 				<li>회원 탈퇴 시 동호회 신청을 위한 이용이 불가합니다.</li>
-				<li>회원 탈퇴 시 내역관리를 위한 예약내역을 제외한 회원의 개인정보(ID, 이름, 생년월일, 휴대전화번호, 주소, 자택전화번호 등)가 삭제되어 해당 정보를 통한 조회가 불가능하게 되며, 재가입시 이전 예약정보는 복원되지 않습니다.</li>
-				<li>탈퇴된 사용자의 ID는 재사용할 수 없습니다.</li>
+				<li>회원 탈퇴 시 내역관리를 위한 예약내역을 제외한 회원의 개인정보(ID, 이름, 생년월일, 휴대전화번호 등)가 삭제되어 해당 정보를 통한 조회가 불가능하게 되며, 재가입시 이전 예약정보는 복원되지 않습니다.</li>
 				<li>아래 비밀번호 입력란에 비밀번호 입력 후 "비밀번호 확인"을 클릭하세요.</li>
 			</ul>		
 		</div>
@@ -111,9 +74,6 @@
 		</table>
 				
 		<input type="submit" class="submit" value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;비밀번호 확인 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" tabindex="-1"/>
-			<!-- <p class="order_box">
-				<a href="javascript:void(0)" onclick="$(this).parents('form').submit()" class="true">비밀번호 확인</a>
-			</p> -->
 	</fieldset>
 	
 	<div class="modal" tabindex="-1">
@@ -132,8 +92,5 @@
 	    </div>
 	  </div>
 	</div>
-	
-<%@include file="../include/footer.jsp"%>
 
-</body>
-</html> 
+<%@include file="../include/footer.jsp"%>

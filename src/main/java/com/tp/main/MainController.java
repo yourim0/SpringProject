@@ -128,7 +128,7 @@ public class MainController {
 		encodePw = lvo.getPw();
 		admin_type = lvo.getAdmin_type();
 		
-		log.info("admin" + admin_type);
+		//log.info("admin" + admin_type);
 
 		//비밀번호 일치여부 판단
 		if(true == pwEncoder.matches(rawPw, encodePw)) {
@@ -140,7 +140,11 @@ public class MainController {
 				return "redirect:/login"; 
 			}else {
         	lvo.setPw("");                    // 인코딩된 비밀번호 정보 지움
-            session.setAttribute("lvo", lvo);  // session에 사용자의 정보 저장
+            session.setAttribute("lvo", lvo); // session에 사용자의 정보 저장
+            //세션에 result 저장
+            log.info("lvo" + lvo);
+            String empno = lvo.getEmpno();
+            session.setAttribute("empno", empno);
             return "redirect:/main";  // 메인페이지 이동       
 			}
         //불일치
@@ -195,7 +199,9 @@ public class MainController {
 			}else {
 	        	lvo.setPw("");                    // 인코딩된 비밀번호 정보 지움
 	            session.setAttribute("lvo", lvo);     // session에 사용자의 정보 저장
-	            return "redirect:/main";  // 메인페이지 이동       
+	            String empno = lvo.getEmpno();
+	            session.setAttribute("empno", empno);
+	            return "redirect:/admin/main";  // 메인페이지 이동       
 			}
         //불일치
 		}else{
@@ -430,6 +436,40 @@ public class MainController {
 		
         return "redirect:/info";
 	}
+	//--------------mypage_password--------------------
+	
+	@RequestMapping(value = "/password", method=RequestMethod.GET)
+	public String passwordGET(){
+		log.info("password 진입");
+		 
+		return "/mypage/password";
+	}
+	
+	@RequestMapping(value = "/password", method=RequestMethod.POST)
+	public String passwordPOST(HttpServletRequest request, RedirectAttributes rttr) throws Exception{
+		log.info("password 진입");
+		
+		HttpSession session = request.getSession();
+		UsersVO lvo = (UsersVO)session.getAttribute("lvo");
+		String id = lvo.getId();
+		//로그인 비밀번호
+		String encodePw = usersService.mypage_Pw(id);
+		
+		//현재 비밀번호와 일치여부
+		String rawPw = request.getParameter("pw");
+		String new_pw = request.getParameter("new_pwck");
+		lvo.setPw(new_pw);
+		
+		if(true == pwEncoder.matches(rawPw, encodePw)) {
+				int result = usersService.resetPw(lvo);//새로운 비밀번호 update
+				log.info(result);
+				rttr.addFlashAttribute("result" , result);
+		}else {
+			log.info("fail");
+			rttr.addFlashAttribute("result" , 0);
+		}
+		return "redirect:/password";
+	}
 	
 	
 	//--------------mypage_applyList--------------------
@@ -439,12 +479,6 @@ public class MainController {
 		
 		return "/mypage/applyList";
 	}
-	@RequestMapping(value = "/password", method=RequestMethod.GET)
-	public String password() throws Exception{
-		log.info("password 진입");
-		
-		return "/mypage/password";
-	}
 	
 	@RequestMapping(value = "/withDrawal", method=RequestMethod.GET)
 	public String withDrawal() throws Exception{
@@ -452,10 +486,23 @@ public class MainController {
 		
 		return "/mypage/withDrawal";
 	}
+	
 	@RequestMapping(value = "/logout", method=RequestMethod.GET)
-	public String logout() throws Exception{
-		log.info("applyList 진입");
-		
-		return "/mypage/logout";
+	public String logout(HttpServletRequest request) throws Exception{
+		log.info("logout 진입");
+        HttpSession session = request.getSession();
+        session.invalidate();
+       // log.info(session.getAttribute("empno"));
+        log.info("삭제완료");
+		return "redirect:/main";
 	}
+	
+	@RequestMapping(value = "/admin/main", method=RequestMethod.GET)
+	public String adminLogin() throws Exception{
+		log.info("adminLogin 진입");
+		
+		return "/admin/main";
+	}
+	
+	
 }
