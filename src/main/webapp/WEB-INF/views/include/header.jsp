@@ -1,15 +1,13 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
-String empno = null;
-
+String empnoSession = null;
 //Session을 받을때는 값이 null로 올때를 생각해서 조건문을 사용한다.
 if (session.getAttribute("empno") != null) {
   //세션의 값을 가져오기
-  empno = (String)session.getAttribute("empno");
-	System.out.println("empno : " + empno);
+  empnoSession = (String)session.getAttribute("empno");
+	System.out.println("empno : " + empnoSession);
 }
 %>
 <!DOCTYPE html>
@@ -52,7 +50,6 @@ if (session.getAttribute("empno") != null) {
 <body>
 	<!-- Navigation-->
 	<div>
-
 		<nav class="navbar navbar-expand-lg navbar-light fixed-top"
 			id="mainNav">
 			<div class="container px-4 px-lg-5" style="margin-top: 10px;">
@@ -98,9 +95,8 @@ if (session.getAttribute("empno") != null) {
 								<li><a class="dropdown-item" href="/home/mypage">동호회 신청 현황</a></li>
 							</ul></li>
 					
-						<div id="login"
-							style="position: absolute; top: 0px; right: 150px;">
-							<% if (empno == null) { %>
+						<div id="login" style="position: absolute; top: 0px; right: 150px;">
+							<% if (empnoSession == null) { %>
 							<ul
 								style="list-style: none; display: flex; text-decoration: none; color: black;">
 								<a href="/main" style="color: black;"><li>홈</li></a>
@@ -109,7 +105,7 @@ if (session.getAttribute("empno") != null) {
 								<li>|</li>
 								<a href="/join_check" style="color: black;"><li>회원가입</li></a>
 							</ul>
-							<%} else if (empno != null) { %>
+							<%} else if (empnoSession != null) { %>
 							<ul
 								style="list-style: none; display: flex; text-decoration: none; color: black;">
 								<a href="/main" style="color: black;"><li>홈</li></a>

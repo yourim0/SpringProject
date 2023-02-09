@@ -42,7 +42,7 @@
 		<option value="">메뉴 선택</option>
 	</select>
    	<hr />
-
+<form id="withDrawal" method="post">
    	<fieldset>
 	<div class="messagebox">
 		<div>
@@ -56,7 +56,6 @@
 	<br>
 	<h4>비밀번호 입력</h4>
 		<table class="fit">
-			<%-- <caption>회원 비밀번호 확인 : 비밀번호 입력</caption> --%>
 				<colgroup>
 					<col style="width: 25%"/>
 					<col style="width: auto"/>
@@ -68,10 +67,9 @@
 			   <div class="col-sm-9"><input id="user_password" name="user_password" placeholder="비밀번호를 입력해 주세요." autofocus="autofocus" type="password" value="" size="50" style="color:gray;"/></div>
 			</div>
 		</table>
-				
-		<input type="submit" class="submit" value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;비밀번호 확인 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" tabindex="-1"/>
+	<button type="button" class="withDrawal_button" onclick="withDrawal()">비밀번호 확인</button>
 	</fieldset>
-	
+</form>	
 	<div class="modal" tabindex="-1">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
@@ -88,7 +86,7 @@
 	    </div>
 	  </div>
 	</div>
-	
+
 <script type="text/javascript">
 $(document).ready(function() {
       
@@ -163,4 +161,29 @@ $(document).ready(function() {
     });
 });
 </script>
+<script>
+	function withDrawal(){
+		var form = document.getElementById("withDrawal");
+		var user_password = document.getElementById("user_password");
+		if (user_password.value == "") {
+			alert("비밀번호를 입력하세요.");
+			return false;
+		}
+		form.submit();
+	}
+</script>
+<script>
+
+var result = '${del_result}';
+console.log("result : " + result);
+if(result != ""){
+	if(result > 0 ){
+		alert("탈퇴가 완료되었습니다. 이용해주셔서 감사합니다.");
+		location.href="/main"
+	}else if(result == 0){
+		alert("재시도해주세요.");
+	}
+};
+</script>
+
 <%@include file="../include/footer.jsp"%>

@@ -39,6 +39,11 @@ public interface UsersMapper {
 	
 	//마이페이지 전화번호 수정
 	public int mypage_update_phoneNum(UsersVO vo);
-
+	
+	//탈퇴시 클럽카운트 감소
+	public int downClubCount(String id);
+	
+	//member 유저삭제
+	public int deleteUser(String id);
 	
 }

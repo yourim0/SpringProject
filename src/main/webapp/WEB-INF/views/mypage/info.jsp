@@ -166,7 +166,6 @@
 		</p>
 	</div>
 	<script>
-
 	//이메일 입력방식 선택
 	$('#email_3').change(function(){
 	   $("#email_3 option:selected").each(function () {
@@ -314,24 +313,6 @@ $(document).ready(function() {
     subObject.sub_category_name = "활동 중 동호회"
     subArray.push(subObject);
       
-/*     subObject = new Object();
-    subObject.main_category_id = "2";
-    subObject.sub_category_id = "/applyList"
-    subObject.sub_category_name = "내 신청현황"
-    subArray.push(subObject);
-      
-    subObject = new Object();
-    subObject.main_category_id = "2";
-    subObject.sub_category_id = "/applyList"
-    subObject.sub_category_name = "신규동호회 신청현황"
-    subArray.push(subObject);
-      
-    subObject = new Object();
-    subObject.main_category_id = "2";
-    subObject.sub_category_id = "/applyList"
-    subObject.sub_category_name = "탈퇴한 동호회"
-    subArray.push(subObject);
-       */
     //메인 카테고리 셋팅
     var mainCategorySelectBox = $("select[name='mainCategory']");
       
@@ -358,5 +339,16 @@ $(document).ready(function() {
           
     });
 });
+</script>
+<script>
+var result_email = '${result_email}';
+var result_phoneNum = '${result_phoneNum}';
+console.log(result_email);
+console.log(result_phoneNum);
+
+if(result_email == 1){
+	alert("정보가 정상적으로 수정되었습니다.");
+}
+
 </script>
 	<%@include file="../include/footer.jsp"%>

@@ -29,7 +29,7 @@
 	
 	<span>&nbsp;&nbsp;&nbsp;</span>
 	<!--대분류입니다.--->
-	<select class="dropdown" name="mainCategory" id="mainCategory" onchange="" onload="test();">
+	<select class="dropdown" name="mainCategory" id="mainCategory" onchange=""><!-- onload="test();" -->
 		<option value="">메뉴 선택</option>
 		
 	</select>
@@ -232,7 +232,7 @@ $(document).ready(function() {
             }
         });
 
-        function test(){
+/*         function test(){
       	  var length = document.getElementById("subCategory").options.length;
       	  console.log(length);
       	  for(i = 0 ; i < length ; i ++){
@@ -242,9 +242,7 @@ $(document).ready(function() {
       		  }
       	  }
         }
-        
-        test();
-          
+        test(); */
     });
 });
 </script>

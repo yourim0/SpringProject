@@ -96,7 +96,18 @@ public class UsersServiceImpl implements UsersService  {
 
 		return result;
 	}
-	
+
+	@Override
+	public int downClubCount(String id) throws Exception {
+		int result = mapper.downClubCount(id);
+		return result;
+	}
+
+	@Override
+	public int deleteUser(String id) throws Exception {
+		int result = mapper.deleteUser(id);
+		return result;
+	}
 
 	
 }

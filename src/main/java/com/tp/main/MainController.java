@@ -438,71 +438,95 @@ public class MainController {
 	}
 	//--------------mypage_password--------------------
 	
-	@RequestMapping(value = "/password", method=RequestMethod.GET)
-	public String passwordGET(){
-		log.info("password 진입");
-		 
-		return "/mypage/password";
-	}
-	
-	@RequestMapping(value = "/password", method=RequestMethod.POST)
-	public String passwordPOST(HttpServletRequest request, RedirectAttributes rttr) throws Exception{
-		log.info("password 진입");
-		
-		HttpSession session = request.getSession();
-		UsersVO lvo = (UsersVO)session.getAttribute("lvo");
-		String id = lvo.getId();
-		//로그인 비밀번호
-		String encodePw = usersService.mypage_Pw(id);
-		
-		//현재 비밀번호와 일치여부
-		String rawPw = request.getParameter("pw");
-		String new_pw = request.getParameter("new_pwck");
-		lvo.setPw(new_pw);
-		
-		if(true == pwEncoder.matches(rawPw, encodePw)) {
-				int result = usersService.resetPw(lvo);//새로운 비밀번호 update
-				log.info(result);
-				rttr.addFlashAttribute("result" , result);
-		}else {
-			log.info("fail");
-			rttr.addFlashAttribute("result" , 0);
+		@RequestMapping(value = "/password", method=RequestMethod.GET)
+		public String passwordGET(){
+			log.info("password 진입");
+			 
+			return "/mypage/password";
 		}
-		return "redirect:/password";
-	}
-	
-	
-	//--------------mypage_applyList--------------------
-	@RequestMapping(value = "/applyList", method=RequestMethod.GET)
-	public String applyList() throws Exception{
-		log.info("applyList 진입");
 		
-		return "/mypage/applyList";
-	}
-	
-	@RequestMapping(value = "/withDrawal", method=RequestMethod.GET)
-	public String withDrawal() throws Exception{
-		log.info("applyList 진입");
+		@RequestMapping(value = "/password", method=RequestMethod.POST)
+		public String passwordPOST(HttpServletRequest request, RedirectAttributes rttr) throws Exception{
+			log.info("password 진입");
+			
+			HttpSession session = request.getSession();
+			UsersVO lvo = (UsersVO)session.getAttribute("lvo");
+			String id = lvo.getId();
+			//로그인 비밀번호
+			String encodePw = usersService.mypage_Pw(id);
+			
+			//현재 비밀번호와 일치여부
+			String rawPw = request.getParameter("pw");
+			String new_pw = request.getParameter("new_pwck");
+			lvo.setPw(new_pw);
+			
+			if(true == pwEncoder.matches(rawPw, encodePw)) {
+					int result = usersService.resetPw(lvo);//새로운 비밀번호 update
+					log.info(result);
+					rttr.addFlashAttribute("result" , result);
+			}else {
+				log.info("fail");
+				rttr.addFlashAttribute("result" , 0);
+			}
+			return "redirect:/password";
+		}
 		
-		return "/mypage/withDrawal";
-	}
-	
-	@RequestMapping(value = "/logout", method=RequestMethod.GET)
-	public String logout(HttpServletRequest request) throws Exception{
-		log.info("logout 진입");
-        HttpSession session = request.getSession();
-        session.invalidate();
-       // log.info(session.getAttribute("empno"));
-        log.info("삭제완료");
-		return "redirect:/main";
-	}
-	
-	@RequestMapping(value = "/admin/main", method=RequestMethod.GET)
-	public String adminLogin() throws Exception{
-		log.info("adminLogin 진입");
+		//--------------mypage_withDrawal--------------------
+
 		
-		return "/admin/main";
+		@RequestMapping(value = "/withDrawal", method=RequestMethod.GET)
+		public String withDrawalGET() throws Exception{
+			log.info("withDrawal 진입");
+			
+			return "/mypage/withDrawal";
+		}
+		
+		@RequestMapping(value = "/withDrawal", method=RequestMethod.POST)
+		public String withDrawalPOST(HttpServletRequest request, RedirectAttributes rttr) throws Exception{
+			log.info("withDrawal POST 진입");
+			
+			HttpSession session = request.getSession();
+			UsersVO lvo = (UsersVO)session.getAttribute("lvo");
+			String id = lvo.getId();
+			//로그인 비밀번호
+			String encodePw = usersService.mypage_Pw(id);
+			log.info(encodePw);
+			//현재 비밀번호와 일치여부
+			String rawPw = request.getParameter("user_password");
+			
+			if(true == pwEncoder.matches(rawPw, encodePw)) {
+					int result = usersService.downClubCount(id); //Club 인원수 수정
+					int del_result = usersService.deleteUser(id);//member user삭제
+					session.invalidate ();
+					log.info(result); //-1
+					log.info(del_result); //1
+					rttr.addFlashAttribute("del_result" , del_result);
+			}else { //삭제되고 아이디 불일치 할 때
+				log.info("fail");
+				rttr.addFlashAttribute("result" , 0);
+			}
+			return "redirect:/withDrawal";
+		}
+		
+		
+		//--------------logout--------------------
+		@RequestMapping(value = "/logout", method=RequestMethod.GET)
+		public String logout(HttpServletRequest request ,Model model) throws Exception{
+			log.info("logout 진입");
+	        HttpSession session = request.getSession();
+	        session.invalidate();
+	        model.addAttribute("msg", "로그아웃 되었습니다.");
+	        model.addAttribute("url", "main");
+	        log.info("삭제완료");
+	        
+			return "/account/logout";
+		}
+		
+		//--------------mypage_applyList--------------------
+		@RequestMapping(value = "/applyList", method=RequestMethod.GET)
+		public String applyList() throws Exception{
+			log.info("applyList 진입");
+			
+			return "/mypage/applyList";
+		}
 	}
-	
-	
-}

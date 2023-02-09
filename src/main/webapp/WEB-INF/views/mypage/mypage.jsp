@@ -36,7 +36,7 @@
 	<span>&nbsp;&nbsp;&nbsp;</span>
 
 	<!--대분류입니다.--->
-	<select class="dropdown" name="mainCategory" id="mainCategory" onchange="">
+	<select class="dropdown" name="mainCategory" id="mainCategory" onchange="" disabled>
 		<option value="">메뉴 선택</option>
 		
 	</select>
@@ -44,7 +44,7 @@
 	<span>&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;</span>
 
 	<!--중분류입니다.(회원정보 관리에 해당하는)-->
-	<select class="dropdown" name="subCategory" id="subCategory" onchange="location.href=this.value">
+	<select class="dropdown" name="subCategory" id="subCategory" onchange="location.href=this.value" disabled>
 		<option value="">메뉴 선택</option>
 	</select>
 

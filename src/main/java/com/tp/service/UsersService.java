@@ -40,4 +40,9 @@ public interface UsersService {
 	//마이페이지 휴대폰번호 수정
 	public int mypage_update_phoneNum(UsersVO vo) throws Exception;
 
+	//마이페이지 클럽인원 수정
+	public int downClubCount(String id) throws Exception;
+	
+	//회원탈퇴
+	public int deleteUser(String id) throws Exception;
 }

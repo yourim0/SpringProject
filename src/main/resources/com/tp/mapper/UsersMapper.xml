@@ -60,4 +60,20 @@
 	<update id = "mypage_update_phoneNum">
 	update member set phoneNum  = #{phoneNum} where id = #{id}
 	</update>
+		<!-- mypage 탈퇴 전 가입된 동호회 인원수 감소 -->
+	<update id = "downClubCount">
+		BEGIN
+		FOR i in(SELECT cno FROM MY_CLUB WHERE id= #{id}) LOOP 
+			UPDATE CLUB SET count = count-1 WHERE cno = i.cno;
+		COMMIT;
+		END LOOP;
+	END;
+	</update>
+	
+	<!-- mypage 회원정보 삭제 -->
+	<delete id ="deleteUser">
+		DELETE FROM MEMBER WHERE id = #{id}
+	</delete>
+	
+	
   </mapper>
