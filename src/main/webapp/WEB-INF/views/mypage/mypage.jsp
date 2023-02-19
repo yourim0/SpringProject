@@ -7,6 +7,9 @@
 <title>mypage</title>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<link href="../resources/css/userAuthcss.css" rel="stylesheet" />
+<link href="../resources/css/mypage.css" rel="stylesheet" />
+<link href="../resources/css/full.css" rel="stylesheet" />
 
 <%@include file="../include/header.jsp"%>
 </head>
@@ -49,7 +52,7 @@
 	</select>
 
 	<hr />
-<form id="mypage_pw" method="post">
+	<form id="mypage_pw" method="post">
 	<fieldset>
 		<div class="messagebox">
 			<div>
@@ -69,26 +72,22 @@
 
 			<div class="container2">
 				<div class="row">
-					<div class="col-sm-3">
-						<label for="user_password">비밀번호</label>
-					</div>
-					<div class="col-sm-9">
-						<input id="user_password" name="user_password"
-							placeholder="비밀번호를 입력해 주세요." autofocus="autofocus"
-							type="password" value="" size="50" style="color: gray;" />
-					</div>
+				   <div class="col-sm-3"><label for="user_password" class="mypage_cus">비밀번호</label></div>
+				   <div class="col-sm-9"><input id="user_password" name="user_password" placeholder="비밀번호를 입력해 주세요." autofocus="autofocus" type="password" value="" size="50" style="color:gray; height: 50px;"/></div>
 				</div>
 			</div>
 		</table>
-
-		<p class="order_box">
-			<button type="button" class="mypage_pw" onclick="check_pw()">확인</button>
-			<button type="button" class="findpw_button" onclick="">취소</button>
-		</p>
+		<div class="text-center">
+			<p class="order_box">
+				<button type="button" class="mypage_pw btn-primary btn-lg" onclick="check_pw()">확인</button>
+				<button type="button" class="findpw_button btn-danger btn-lg" onclick="">취소</button>
+			</p>
+		</div>
 	</fieldset>
 </form>
 
 <script>
+
 check_pw = function(){
 	var form = $("#mypage_pw");
 	var user_password = document.getElementById("user_password").value;
@@ -103,14 +102,27 @@ check_pw = function(){
 	}
 </script>
 <script>
-	var result = ${result};
+	//비밀번호 확인
+ 	var result = ${result};
 	if(result == 1 ){
-		alert("확인되었습니다.")
+		alert("확인되었습니다.");
 		location.href="/info";
 	}else if(result == 0){
 		alert("비밀번호를 확인해주세요.");
 	}
 </script>
+<script>	
+	var msg = ${msg};
+	console.log(msg);
+	if(!msg){
+		alert("로그인이 필요한 페이지입니다.");
+
+		location.href="/login";
+	}else{
+		alert("확인");
+	}
+</script>
+
 <script type="text/javascript">
 $(document).ready(function() {
       
@@ -154,14 +166,8 @@ $(document).ready(function() {
     //2에 해당하는 sub category 리스트
     subObject = new Object();
     subObject.main_category_id = "2";
-    subObject.sub_category_id = "/applyList"
+    subObject.sub_category_id = "/activeList"
     subObject.sub_category_name = "활동 중 동호회"
-    subArray.push(subObject);
-      
-/*     subObject = new Object();
-    subObject.main_category_id = "2";
-    subObject.sub_category_id = "/applyList"
-    subObject.sub_category_name = "내 신청현황"
     subArray.push(subObject);
       
     subObject = new Object();
@@ -169,13 +175,7 @@ $(document).ready(function() {
     subObject.sub_category_id = "/applyList"
     subObject.sub_category_name = "신규동호회 신청현황"
     subArray.push(subObject);
-      
-    subObject = new Object();
-    subObject.main_category_id = "2";
-    subObject.sub_category_id = "/applyList"
-    subObject.sub_category_name = "탈퇴한 동호회"
-    subArray.push(subObject);
-       */
+    
     //메인 카테고리 셋팅
     var mainCategorySelectBox = $("select[name='mainCategory']");
       

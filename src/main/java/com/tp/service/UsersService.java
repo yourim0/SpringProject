@@ -1,6 +1,10 @@
 package com.tp.service;
 
 
+import java.util.List;
+
+import com.tp.domain.ClubDTO;
+
 import com.tp.domain.MemberVO;
 import com.tp.domain.UsersVO;
 
@@ -45,4 +49,16 @@ public interface UsersService {
 	
 	//회원탈퇴
 	public int deleteUser(String id) throws Exception;
+	
+	//마이페이지 동호회관리 - 내가 신청한 동호회
+	public List<ClubDTO> myApplyList(String id) throws Exception;
+	
+	//마이페이지 동호회관리 - 내가 신청한 신규동호회
+	public List<ClubDTO> myActiveList(String id) throws Exception;
+	
+	//마이페이지 동호회관리 - 내가 탈퇴할 동호회인원수 감소
+	public Long mypageDowncount(Long cno) throws Exception;
+	
+	//마이페이지 동호회관리 - 탈퇴 동호회 status 변경
+	public int clubWithdrawal(ClubDTO cdto) throws Exception;
 }

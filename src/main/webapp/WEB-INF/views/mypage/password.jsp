@@ -9,6 +9,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@include file="../include/header.jsp"%>
+<link rel="stylesheet" href="../resources/css/full.css">
+<link rel="stylesheet" href="../resources/css/mypage.css">
  </head> 
  <body>
    <div class="wrap">
@@ -89,12 +91,12 @@
 					</tbody>
 				</table>
 				<p>
-					※ 영문 대문자, 소문자, 숫자, 특수기호를 2가지 조합 시 10자 이상, 3가지 이상 조합 시 8자 이상 입력하세요.
+					※  비밀번호에 문자, 숫자, 특수문자가 각각 최소 1개 이상 포함, 8자 ~ 16까지 허용됩니다.
 				</p>
 				
 				<div class="text-center">
-					<button type="button" class="set_pw" onclick="set_pw()">비밀번호 변경</button>
-					<button type="button" class="" onclick="">비밀번호 찾기</button>
+					<button type="button" class="set_pw btn btn-primary" onclick="set_pw()">비밀번호 변경</button>
+					<button type="button" class="btn btn-primary" onclick="">비밀번호 찾기</button>
 
 				</div>
 			</fieldset>
@@ -108,7 +110,7 @@ set_pw = function(){
 	var pw = $("#pw").val();
 	var new_pw = $("#new_pw").val();
 	var new_pwck = $("#new_pwck").val();
-	var RegExp = /^[a-zA-Z0-9]{4,12}$/;
+	var RegExpPw = /^(?=.*[a-zA-Z])((?=.*\d)(?=.*\W)).{8,16}$/;
 	
 //공백확인
 		if (!pw ) {
@@ -124,8 +126,8 @@ set_pw = function(){
 			return false;
 		}
 //패스워드 형식검사
-		if (!RegExp.test(new_pwck)) {
-			alert("비밀번호는 4~12자의 영문 대소문자와 숫자로만 입력하여 주세요.");
+		if (!RegExpPw.test(new_pwck)) {
+			alert("비밀번호는 문자, 숫자, 특수문자가 각각 최소 1개 이상 포함, 최소 8자리로 입력하여 주세요.");
 			return false;
 		}
 		//비밀번호 확인 일치 여부
@@ -203,8 +205,14 @@ $(document).ready(function() {
     //2에 해당하는 sub category 리스트
     subObject = new Object();
     subObject.main_category_id = "2";
-    subObject.sub_category_id = "/applyList"
+    subObject.sub_category_id = "/activeList"
     subObject.sub_category_name = "활동 중 동호회"
+    subArray.push(subObject);
+    
+    subObject = new Object();
+    subObject.main_category_id = "2";
+    subObject.sub_category_id = "/applyList"
+    subObject.sub_category_name = "신규동호회 신청현황"
     subArray.push(subObject);
       
 

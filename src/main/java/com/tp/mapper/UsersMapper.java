@@ -1,6 +1,9 @@
 package com.tp.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
+import com.tp.domain.ClubDTO;
 
 import com.tp.domain.MemberVO;
 import com.tp.domain.UsersVO;
@@ -45,5 +48,18 @@ public interface UsersMapper {
 	
 	//member 유저삭제
 	public int deleteUser(String id);
+	
+	// mypage 내가 신청한 신규동호회 목록조회 
+	public List<ClubDTO> myApplyList(String id);
+	
+	// mypage 활동중 동호회 목록조회
+	public List<ClubDTO> myActiveList(String id);
+
+	
+	//mypage 동호회 탈퇴 downcount 
+	public Long mypageDowncount(Long cno);
+	
+	//mypage 동호회 탈퇴 status변경
+	public int clubWithdrawal (ClubDTO cdto);
 	
 }

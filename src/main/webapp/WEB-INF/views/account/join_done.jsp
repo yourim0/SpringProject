@@ -8,6 +8,7 @@
 
 <%@include file="../include/header.jsp"%>
 <link href="../resources/css/userAuthcss.css" rel="stylesheet" />
+<link rel="stylesheet" href="../resources/css/full.css">
 <div id="container" class="sub" data-menu-name="회원가입">
 	<div class="container_align">
 		<div id="SUB-GNB">
@@ -58,7 +59,7 @@
 								<span><strong>${id }</strong>님의 회원가입이 완료되었습니다.<br>다양한 정보와 서비스를 제공해 드릴 수 있도록 노력하겠습니다.<br>감사합니다.
 								</span>
 								<hr />
-								<a href="/login">로그인하기</a>
+								<a href="/login" class="check_button">로그인하기</a>
 							</table>
 						</div>
 				</fieldset>

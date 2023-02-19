@@ -69,11 +69,40 @@
 		END LOOP;
 	END;
 	</update>
+		
+	<!-- mypage 회원정보 삭제전 id admin으료 변경 --> 
+	<update id ="updateId">
+		UPDATE CLUB SET ID = 'admin' WHERE id = #{id} 
+	</update>
 	
 	<!-- mypage 회원정보 삭제 -->
 	<delete id ="deleteUser">
 		DELETE FROM MEMBER WHERE id = #{id}
 	</delete>
+	
+		<!-- mypage 내가 신청한 신규동호회 목록조회 -->
+	<select id="myApplyList" resultType="com.tp.domain.ClubDTO">
+		select rownum AS rnum, c.* from club c where id = #{id}
+	</select>
+	
+	<!-- mypage 활동중 동호회 목록조회 -->
+	<select id="myActiveList" resultType="com.tp.domain.ClubDTO">
+  		select rownum AS rnum , c.count, c.club_name , c.meeting_day , c.meeting_time , f.status , f.app_date, f.ID,f.CNO
+	   from ( select   id , cno , status,  to_char(ceil(sysdate - app_date)) as app_date   from my_club  ) f
+	    INNER JOIN CLUB c 
+	   ON f.cno = c.cno
+	   WHERE f.id= #{id}
+	</select>
+	
+	<!--mypage 동호회 탈퇴할 동호회만 count 감소--> 
+	<update id="mypageDowncount">
+		UPDATE CLUB SET count = count -1 WHERE cno = #{cno}
+	</update>
+	
+	<update id="clubWithdrawal">
+		UPDATE MY_CLUB SET STATUS = 2 WHERE id = #{id} AND cno = #{cno}
+	</update> 
+	
 	
 	
   </mapper>

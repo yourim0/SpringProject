@@ -506,7 +506,7 @@
     border-color: #e75b8d !important;
 }
 .bordered-palegreen {
-    border-color: #a0d468 !important;
+    border-color: #0d6efd  !important;
 }
 .bordered-darkorange {
     border-color: #ed4e2a !important;
@@ -2049,3 +2049,9 @@ input[type=checkbox].checkbox-slider.colored-maroon.toggle:checked~.text:after {
 input[type=checkbox].checkbox-slider.colored-maroon.toggle~.text:after {
     background-color: #981b48
 }
+
+.widget_no_paddding{
+	padding-left: 0px;
+}
+
+

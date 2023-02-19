@@ -8,6 +8,7 @@
 
 <%@include file="../include/header.jsp"%>
 <link href="../resources/css/userAuthcss.css" rel="stylesheet" />
+<link rel="stylesheet" href="../resources/css/full.css">
 <div id="container" class="sub" data-menu-name="비밀번호 찾기">
 	<div class="container_align">
 		<div id="SUB-GNB">
@@ -48,13 +49,13 @@
 									<tr>
 										<th scope="row"><label for="empno">사번<em>*</em></label></th>
 										<td><input id="empno" name="empno" placeholder="사번을 입력하세요."
-											type="text" value="" class="input_text"></td>
+											type="text" value="" class="input_text join_form_text"></td>
 									</tr>
 									<tr>
 										<th scope="row"><label for="id">아이디<em>*</em></label></th>
 										<td><input id="id" name="id"
 											placeholder="아이디를 입력하세요." type="text" value=""
-											class="input_text">
+											class="input_text join_form_text">
 											<button type="submit" class="mail_check_button" onclick="">인증번호 발송</button>
 											<input type="hidden" name="checked_pw" value=""></td>
 									</tr>
@@ -63,7 +64,7 @@
 										<th scope="row"><label for="mail_check_num">인증번호<em>*</em></label></th>
 										<td><input id="mail_check_num" name="mail_check_num"
 											placeholder="인증번호를 입력하세요." type="text" value=""
-											class="input_text"></td>
+											class="input_text join_form_text"></td>
 									</tr>
 
 								</tbody>
@@ -71,8 +72,8 @@
 
 						</div>
 						<p class="order_box">
-							<button type="button" class="findpw_button" onclick="findpw()">확인</button><a href="/findpw"
-								class="true">취소</a>
+							<button type="button" class="findpw_button check_button btn btn-primary" onclick="findpw()">확인</button>
+							<button type="button" class="findpw_button check_button btn btn-primary" onclick="location.href='/findpw'">취소</button>
 						</p>
 					</div>
 				</fieldset>
@@ -118,7 +119,7 @@ $(".mail_check_button").click(function(){
         	$("input[name=checked_pw]").val('y');
         }
     });  
-	return false; //기본 동작인 submit의 동작을 막아 페이지 reload를 막는다.
+	return false; //기본 동작인 submit의 동작을 막아 페이지 reload를 막음
 });
 
 findpw = function(){

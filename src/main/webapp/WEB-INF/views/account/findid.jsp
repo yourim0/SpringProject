@@ -8,6 +8,7 @@
 
 <%@include file="../include/header.jsp"%>
 <link href="../resources/css/userAuthcss.css" rel="stylesheet" />
+<link rel="stylesheet" href="../resources/css/full.css">
 <div id="container" class="sub" data-menu-name="아이디 찾기">
 	<div class="container_align">
 		<div id="SUB-GNB">
@@ -50,7 +51,7 @@
 									<tr>
 										<th scope="row"><label for="name">사번<em>*</em></label></th>
 										<td><input id="empno" name="empno" placeholder="사번을 입력하세요."
-											type="text" value="" class="input_text"></td>
+											type="text" value="" class="input_text join_form_text"></td>
 									</tr>
 									<tr>
 										<th scope="row"><label for="name">이름<em>*</em></label></th>
@@ -71,7 +72,7 @@
 							</table>
 						</div>
 						<div class="order_box">
-						<button type="button" class="findid_button" onclick="findid()">확인</button>
+						<button type="button" class="findid_button check_button btn btn-primary" onclick="findid()">확인</button>
 						</div>
 					</div>
 				</fieldset>
@@ -113,7 +114,7 @@ findid = function(){
 	var birthday_yyyy = $("#birthday_yyyy").val();
 	var birthday_mm = $("#birthday_mm").val();
 	var birthday_dd = $("#birthday_dd").val();
-	var birthday = birthday_yyyy + birthday_mm + birthday_dd;
+	var birthday = birthday_yyyy + "-" + birthday_mm + "-" + birthday_dd;
 	
 	console.log("birthday : "+ birthday);
 	 $("#birth_date").val(birthday);

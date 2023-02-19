@@ -9,6 +9,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@include file="../include/header.jsp"%>
+<link rel="stylesheet" href="../resources/css/full.css">
+<link rel="stylesheet" href="../resources/css/mypage.css">
  </head> 
  <body>
    <div class="wrap">
@@ -67,7 +69,7 @@
 			   <div class="col-sm-9"><input id="user_password" name="user_password" placeholder="비밀번호를 입력해 주세요." autofocus="autofocus" type="password" value="" size="50" style="color:gray;"/></div>
 			</div>
 		</table>
-	<button type="button" class="withDrawal_button" onclick="withDrawal()">비밀번호 확인</button>
+	<button type="button" class="withDrawal_button btn btn-primary" onclick="withDrawal()">비밀번호 확인</button>
 	</fieldset>
 </form>	
 	<div class="modal" tabindex="-1">
@@ -130,10 +132,16 @@ $(document).ready(function() {
     //2에 해당하는 sub category 리스트
     subObject = new Object();
     subObject.main_category_id = "2";
-    subObject.sub_category_id = "/applyList"
+    subObject.sub_category_id = "/activeList"
     subObject.sub_category_name = "활동 중 동호회"
     subArray.push(subObject);
 
+    subObject = new Object();
+    subObject.main_category_id = "2";
+    subObject.sub_category_id = "/applyList"
+    subObject.sub_category_name = "신규동호회 신청현황"
+    subArray.push(subObject);
+    
     //메인 카테고리
     var mainCategorySelectBox = $("select[name='mainCategory']");
       

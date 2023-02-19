@@ -8,6 +8,7 @@
 
 <%@include file="../include/header.jsp"%>
 <link href="../resources/css/userAuthcss.css" rel="stylesheet" />
+<link rel="stylesheet" href="../resources/css/full.css">
 <div id="container" class="sub" data-menu-name="아이디 찾기">
 	<div class="container_align">
 		<div id="SUB-GNB">
@@ -41,8 +42,8 @@
 							<table class="fit no_thead">
 								<span>회원님의 아이디는 <strong>${id }</strong> 입니다.</span>
 								<hr />
-								<a href="/login">로그인하기</a>
-								<a href="/findpw">비밀번호 찾기</a>
+								<a href="/login" class="check_button">로그인하기</a>
+								<a href="/findpw" class="check_button">비밀번호 찾기</a>
 							</table>
 						</div>
 				</fieldset>

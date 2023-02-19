@@ -8,6 +8,7 @@
 
 <%@include file="../include/header.jsp"%>
 <link href="../resources/css/userAuthcss.css" rel="stylesheet" />
+<link rel="stylesheet" href="../resources/css/full.css">
 <div id="container" class="sub" data-menu-name="회원가입">
 	<div class="container_align">
 		<div id="SUB-GNB">
@@ -71,13 +72,13 @@
 									<th scope="row"><label for="name">사번</label></th>
 									<td><input id="empno" name="empno"
 										placeholder="사번을 입력하세요." type="text" size="20" maxlength="20"
-										class="input_text"></td>
+										class="input_text join_form_text"></td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
 					<p class="order_box">
-						<button type="submit" class="check_button"
+						<button type="submit" class="check_button btn btn-primary"
 							onclick="submit_check();">인증하기</button>
 					</p>
 				</form>

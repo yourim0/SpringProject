@@ -1,5 +1,8 @@
 package com.tp.main;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
@@ -8,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
@@ -16,11 +20,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import com.tp.main.MainController;
+import com.tp.domain.ClubDTO;
 
 import com.tp.domain.MemberVO;
 import com.tp.domain.UsersVO;
@@ -82,11 +89,11 @@ public class MainController {
 		MimeMessageHelper mailHelper = new MimeMessageHelper(mail,"UTF-8");
 	
 		mailHelper.setFrom(from);
-        mailHelper.setTo(to);
-        mailHelper.setSubject(subject);
-        mailHelper.setText(content, true);
-        
-        mailSender.send(mail);
+      mailHelper.setTo(to);
+      mailHelper.setSubject(subject);
+      mailHelper.setText(content, true);
+      
+      mailSender.send(mail);
 	
 	}catch(Exception e) {
 		e.printStackTrace();
@@ -108,14 +115,16 @@ public class MainController {
 	public String loginPOST(HttpServletRequest request, UsersVO vo, RedirectAttributes rttr) throws Exception {
 		//sersVO: 데이터를 전달받기/HttpServletRequest: 로그인 성공 시 session에 회원 정보를 저장/RedirectAttributes: 로그인 실패 시 리다이렉트 된 로그인 페이지에 실패를 의미하는 데이터를 전송
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(true);
+		
 		System.out.println("입력받은 정보 : " + vo);
 		String rawPw = ""; //입력받은 패스워드
-        String encodePw = ""; //인코딩된 패스워드
-        int admin_type;
-        
+      String encodePw = ""; //인코딩된 패스워드
+      int admin_type;
+      
 		UsersVO lvo = usersService.Login(vo);
-		System.out.println("해당 아이디 전체정보 : " + lvo);
+		log.info("해당 아이디 전체정보 : " + lvo);
+		//session.setAttribute("lvo", lvo);
 
 		//lvo 정보 없을때
 		if(lvo == null) {
@@ -128,7 +137,7 @@ public class MainController {
 		encodePw = lvo.getPw();
 		admin_type = lvo.getAdmin_type();
 		
-		//log.info("admin" + admin_type);
+		log.info("admin" + admin_type);
 
 		//비밀번호 일치여부 판단
 		if(true == pwEncoder.matches(rawPw, encodePw)) {
@@ -139,22 +148,23 @@ public class MainController {
 				log.info("비번 불일치");
 				return "redirect:/login"; 
 			}else {
-        	lvo.setPw("");                    // 인코딩된 비밀번호 정보 지움
-            session.setAttribute("lvo", lvo); // session에 사용자의 정보 저장
-            //세션에 result 저장
-            log.info("lvo" + lvo);
-            String empno = lvo.getEmpno();
-            session.setAttribute("empno", empno);
-            return "redirect:/main";  // 메인페이지 이동       
+				log.info("else진입");
+	        	lvo.setPw("");                    // 인코딩된 비밀번호 정보 지움
+	            session.setAttribute("lvo", lvo); // session에 사용자의 정보 저장
+          //세션에 result 저장
+          log.info("lvo" + lvo);
+          String id = lvo.getId();
+          session.setAttribute("id", id);
+          return "redirect:/main";  // 메인페이지 이동       
 			}
-        //불일치
+      //불일치
 		}else{     
 			boolean result = false;
 			rttr.addFlashAttribute("result", result);
 			rttr.addFlashAttribute("admin_type", admin_type);
 			log.info("비번 불일치");
 			return "redirect:/login";   // 로그인 페이지로 이동
-        }
+      }
 	}
 	
 	
@@ -171,9 +181,9 @@ public class MainController {
 		HttpSession session = request.getSession();
 		System.out.println("입력받은 정보 : " + vo);
 		String rawPw = ""; //입력받은 패스워드
-        String encodePw = ""; //인코딩된 패스워드
-        int admin_type;
-  
+      String encodePw = ""; //인코딩된 패스워드
+      int admin_type;
+
 		UsersVO lvo = usersService.Login(vo);
 		System.out.println("해당 아이디 전체정보 : " + lvo);
 
@@ -197,18 +207,26 @@ public class MainController {
 				log.info("admin:0");
 				return "redirect:/admin"; 
 			}else {
+				log.info("else진입");
 	        	lvo.setPw("");                    // 인코딩된 비밀번호 정보 지움
-	            session.setAttribute("lvo", lvo);     // session에 사용자의 정보 저장
-	            String empno = lvo.getEmpno();
-	            session.setAttribute("empno", empno);
-	            return "redirect:/admin/main";  // 메인페이지 이동       
+	            session.setAttribute("lvo", lvo); // session에 사용자의 정보 저장
+	            String id = lvo.getId();
+	            session.setAttribute("id", id);
+	            return "redirect:/main";  // 메인페이지 이동       
 			}
-        //불일치
+      //불일치
 		}else{
 			rttr.addFlashAttribute("admin_type", admin_type);
 			log.info("비번 불일치");
 			return "redirect:/admin";   // 로그인 페이지로 이동
-        }
+      }
+	}
+	//관리자메인
+	@RequestMapping(value = "/admin/main", method=RequestMethod.GET)
+	public String adminLogin() throws Exception{
+		log.info("adminMain 진입");
+		
+		return "/admin/main";
 	}
 	
 	//-------------아이디 찾기------------------
@@ -271,13 +289,14 @@ public class MainController {
 		vo.setEmpno(empno);
 		log.info("set후 : " + vo);
 		int result = usersService.resetPw(vo);
+		log.info("reset 결과 : " + result);
 		
 		if(result == 1) {
 			rttr.addFlashAttribute("result",result);
 		}else {
 			rttr.addFlashAttribute("result",0);
 		}
-		return "redirect:/login";
+		return "redirect:/resetpw";
 	}
 	
 	//-------------약관동의-------------------
@@ -334,13 +353,13 @@ public class MainController {
 
 	@RequestMapping(value="/join_form", method=RequestMethod.POST)
 	public String join_form(UsersVO vo,RedirectAttributes rttr) throws Exception{
-       
-        //회원가입 쿼리 실행
-        usersService.UserJoin(vo);
-        
-        String id = vo.getId();
-        rttr.addFlashAttribute("id", id);
-        return "redirect:/join_done";
+     
+      //회원가입 쿼리 실행
+      usersService.UserJoin(vo);
+      
+      String id = vo.getId();
+      rttr.addFlashAttribute("id", id);
+      return "redirect:/join_done";
 	}
 
 	//--------------아이디 중복검사--------------------
@@ -363,7 +382,6 @@ public class MainController {
 	public String join_done() {
 
 		return "/account/join_done";
-		
 	}
 
 	
@@ -378,23 +396,26 @@ public class MainController {
 	
 	@RequestMapping(value = "/mypage", method=RequestMethod.POST)
 	public String mypagePOST(HttpServletRequest request, RedirectAttributes rttr) throws Exception{
-		log.info("POST 진입");
+		log.info("mypage POST 진입");
 		HttpSession session = request.getSession();
 		UsersVO lvo = (UsersVO)session.getAttribute("lvo");
-		String id = lvo.getId();
-		String encodePw = (String)usersService.mypage_Pw(id); //입력받은
-		log.info(encodePw);
-		String rawPw = request.getParameter("user_password");
-		log.info("raw:"+ rawPw);
-		
-		if(true == pwEncoder.matches(rawPw, encodePw)) {
-			rttr.addFlashAttribute("result",1);
+		if(lvo != null) {
+			log.info("mypage lvo 확인;" + lvo);
+			String id = lvo.getId();
+			String encodePw = (String)usersService.mypage_Pw(id); //입력받은
+			log.info(encodePw);
+			String rawPw = request.getParameter("user_password");
+			log.info("raw:"+ rawPw);
+				if(true == pwEncoder.matches(rawPw, encodePw)) {
+					rttr.addFlashAttribute("result",1);
+				}else {
+					rttr.addFlashAttribute("result",0);
+				}
+				return "redirect:/mypage";
+		}else{
+			log.info("여기와?????");
+			rttr.addFlashAttribute("msg", false);
 			return "redirect:/mypage";
-
-		}else {
-			rttr.addFlashAttribute("result",0);
-			return "redirect:/mypage";
-
 		}
 	}
 	//--------------mypage_info--------------------
@@ -421,9 +442,9 @@ public class MainController {
 		String phoneNum = vo.getPhoneNum();
 		String id = vo.getId();
 		
-        UsersVO lvo = (UsersVO)session.getAttribute("lvo");
-        String empno = lvo.getEmpno();
-        vo.setEmpno(empno);
+      UsersVO lvo = (UsersVO)session.getAttribute("lvo");
+      String empno = lvo.getEmpno();
+      vo.setEmpno(empno);
 		
 		int result_email = usersService.mypage_update_email(vo);
 		int result_phoneNum = usersService.mypage_update_phoneNum(vo);
@@ -434,99 +455,154 @@ public class MainController {
 		lvo.setEmail(email);
 		lvo.setPhoneNum(phoneNum);
 		
-        return "redirect:/info";
+		rttr.addFlashAttribute("result_email",result_email);
+		rttr.addFlashAttribute("result_phoneNum", result_phoneNum);
+      return "redirect:/info";
 	}
 	//--------------mypage_password--------------------
 	
-		@RequestMapping(value = "/password", method=RequestMethod.GET)
-		public String passwordGET(){
-			log.info("password 진입");
-			 
-			return "/mypage/password";
-		}
-		
-		@RequestMapping(value = "/password", method=RequestMethod.POST)
-		public String passwordPOST(HttpServletRequest request, RedirectAttributes rttr) throws Exception{
-			log.info("password 진입");
-			
-			HttpSession session = request.getSession();
-			UsersVO lvo = (UsersVO)session.getAttribute("lvo");
-			String id = lvo.getId();
-			//로그인 비밀번호
-			String encodePw = usersService.mypage_Pw(id);
-			
-			//현재 비밀번호와 일치여부
-			String rawPw = request.getParameter("pw");
-			String new_pw = request.getParameter("new_pwck");
-			lvo.setPw(new_pw);
-			
-			if(true == pwEncoder.matches(rawPw, encodePw)) {
-					int result = usersService.resetPw(lvo);//새로운 비밀번호 update
-					log.info(result);
-					rttr.addFlashAttribute("result" , result);
-			}else {
-				log.info("fail");
-				rttr.addFlashAttribute("result" , 0);
-			}
-			return "redirect:/password";
-		}
-		
-		//--------------mypage_withDrawal--------------------
-
-		
-		@RequestMapping(value = "/withDrawal", method=RequestMethod.GET)
-		public String withDrawalGET() throws Exception{
-			log.info("withDrawal 진입");
-			
-			return "/mypage/withDrawal";
-		}
-		
-		@RequestMapping(value = "/withDrawal", method=RequestMethod.POST)
-		public String withDrawalPOST(HttpServletRequest request, RedirectAttributes rttr) throws Exception{
-			log.info("withDrawal POST 진입");
-			
-			HttpSession session = request.getSession();
-			UsersVO lvo = (UsersVO)session.getAttribute("lvo");
-			String id = lvo.getId();
-			//로그인 비밀번호
-			String encodePw = usersService.mypage_Pw(id);
-			log.info(encodePw);
-			//현재 비밀번호와 일치여부
-			String rawPw = request.getParameter("user_password");
-			
-			if(true == pwEncoder.matches(rawPw, encodePw)) {
-					int result = usersService.downClubCount(id); //Club 인원수 수정
-					int del_result = usersService.deleteUser(id);//member user삭제
-					session.invalidate ();
-					log.info(result); //-1
-					log.info(del_result); //1
-					rttr.addFlashAttribute("del_result" , del_result);
-			}else { //삭제되고 아이디 불일치 할 때
-				log.info("fail");
-				rttr.addFlashAttribute("result" , 0);
-			}
-			return "redirect:/withDrawal";
-		}
-		
-		
-		//--------------logout--------------------
-		@RequestMapping(value = "/logout", method=RequestMethod.GET)
-		public String logout(HttpServletRequest request ,Model model) throws Exception{
-			log.info("logout 진입");
-	        HttpSession session = request.getSession();
-	        session.invalidate();
-	        model.addAttribute("msg", "로그아웃 되었습니다.");
-	        model.addAttribute("url", "main");
-	        log.info("삭제완료");
-	        
-			return "/account/logout";
-		}
-		
-		//--------------mypage_applyList--------------------
-		@RequestMapping(value = "/applyList", method=RequestMethod.GET)
-		public String applyList() throws Exception{
-			log.info("applyList 진입");
-			
-			return "/mypage/applyList";
-		}
+	@RequestMapping(value = "/password", method=RequestMethod.GET)
+	public String passwordGET(){
+		log.info("password 진입");
+		 
+		return "/mypage/password";
 	}
+	
+	@RequestMapping(value = "/password", method=RequestMethod.POST)
+	public String passwordPOST(HttpServletRequest request, RedirectAttributes rttr) throws Exception{
+		log.info("password 진입");
+		
+		HttpSession session = request.getSession();
+		UsersVO lvo = (UsersVO)session.getAttribute("lvo");
+		String id = lvo.getId();
+		//로그인 비밀번호
+		String encodePw = usersService.mypage_Pw(id);
+		
+		//현재 비밀번호와 일치여부
+		String rawPw = request.getParameter("pw");
+		String new_pw = request.getParameter("new_pwck");
+		lvo.setPw(new_pw);
+		
+		if(true == pwEncoder.matches(rawPw, encodePw)) {
+				int result = usersService.resetPw(lvo);//새로운 비밀번호 update
+				log.info(result);
+				rttr.addFlashAttribute("result" , result);
+		}else {
+			log.info("fail");
+			rttr.addFlashAttribute("result" , 0);
+		}
+		return "redirect:/password";
+	}
+	
+	//--------------mypage_withDrawal--------------------
+
+	
+	@RequestMapping(value = "/withDrawal", method=RequestMethod.GET)
+	public String withDrawalGET() throws Exception{
+		log.info("withDrawal 진입");
+		
+		return "/mypage/withDrawal";
+	}
+	
+	@RequestMapping(value = "/withDrawal", method=RequestMethod.POST)
+	public String withDrawalPOST(HttpServletRequest request, RedirectAttributes rttr) throws Exception{
+		log.info("withDrawal POST 진입");
+		
+		HttpSession session = request.getSession();
+		UsersVO lvo = (UsersVO)session.getAttribute("lvo");
+		String id = lvo.getId();
+		//로그인 비밀번호
+		String encodePw = usersService.mypage_Pw(id);
+		log.info(encodePw);
+		//현재 비밀번호와 일치여부
+		String rawPw = request.getParameter("user_password");
+		
+		if(true == pwEncoder.matches(rawPw, encodePw)) {
+				int result = usersService.downClubCount(id); //Club 인원수 수정
+				int del_result = usersService.deleteUser(id);//member user삭제
+				request.getSession().invalidate();
+				request.getSession(true);
+				log.info(result); //-1
+				log.info(del_result); //1
+				rttr.addFlashAttribute("del_result" , del_result);
+		}else { //삭제되고 아이디 불일치 할 때
+			log.info("fail");
+			rttr.addFlashAttribute("result" , 0);
+		}
+		return "redirect:/withDrawal";
+	}
+	
+	
+	//--------------logout--------------------
+	@RequestMapping(value = "/logout", method=RequestMethod.GET)
+	public String logout(HttpServletRequest request ,Model model) throws Exception{
+		log.info("logout 진입");
+		HttpSession session = request.getSession();
+		log.info(session.getAttribute("id"));
+		log.info(session.getAttribute("lvo"));
+
+//		session.setMaxInactiveInterval(0);
+		
+		request.getSession().invalidate();
+		//request.getSession(); 웹 컨테이너는 기본적으로 한 웹 브라우저마다 한 세션을 생성
+		log.info(request.isRequestedSessionIdValid());
+      model.addAttribute("msg", "로그아웃 되었습니다.");
+      model.addAttribute("url", "main");
+      log.info("삭제완료");
+
+      return "main";
+	}
+	
+	//--------------mypage_applyList--------------------
+	@RequestMapping(value = "/applyList", method=RequestMethod.GET)
+	public String applyList(HttpServletRequest request, Model model) throws Exception{
+		
+		log.info("applyList 진입");
+		HttpSession session = request.getSession();
+		UsersVO lvo = (UsersVO)session.getAttribute("lvo");
+		log.info("mypage lvo : " + lvo);
+		String id = (String)lvo.getId();
+		log.info("id : " + id);
+		List<ClubDTO> list = usersService.myApplyList(id);
+		log.info("TEST : " + list );
+		model.addAttribute("list", usersService.myApplyList(id));
+		
+		
+		return "/mypage/applyList";
+	}
+	
+	//--------------mypage_activeList--------------------
+	@RequestMapping(value = "/activeList", method=RequestMethod.GET)
+	public String activeList(HttpServletRequest request, Model model) throws Exception{
+		
+		log.info("activeList 진입");
+		HttpSession session = request.getSession();
+		UsersVO lvo = (UsersVO)session.getAttribute("lvo");
+		log.info("mypage lvo : " + lvo);
+		String id = (String)lvo.getId();
+		List<ClubDTO> list = usersService.myActiveList(id);
+		log.info("ClubDTO list : " + list );
+		model.addAttribute("list", usersService.myActiveList(id));
+		
+		return "/mypage/activeList";
+	}
+	
+	//--------------mypage_withDrawal (count,status)--------------------
+	@RequestMapping(value = "/activeWithdrawal", method=RequestMethod.POST)
+	public String activeWithdrawal(ClubDTO cdto, RedirectAttributes rttr) throws Exception{
+		log.info("clubdto : " + cdto);
+		
+		Long cno = cdto.getCno();
+		Long a = usersService.mypageDowncount(cno); //ok
+		log.info(a);
+//		//status2로 변경
+		int statusResult = usersService.clubWithdrawal(cdto);
+		log.info("statusResutl" + statusResult);
+		rttr.addFlashAttribute("statusResult", statusResult);
+		
+	return "redirect:/activeList";
+	}
+	
+
+}
+

@@ -49,13 +49,13 @@
 									<tr>
 										<th scope="row"><label for="name">새로운 비밀번호<em>*</em></label></th>
 										<td><input id="pw" name="pw"
-											placeholder="새로운 비밀번호를 입력하세요." type="text" value=""
+											placeholder="새로운 비밀번호를 입력하세요." type="password" value=""
 											class="input_text"></td>
 									</tr>
 									<tr>
 										<th scope="row"><label for="name">비밀번호 확인<em>*</em></label></th>
 										<td><input id="pw_ck" name="pw_ck"
-											placeholder="비밀번호를 입력하세요." type="text" value=""
+											placeholder="비밀번호를 입력하세요." type="password" value=""
 											class="input_text"></td>
 									</tr>
 								</tbody>
@@ -63,7 +63,7 @@
 						</div>
 
 						<div class="order_box">
-							<button type="button" class="resetPw_button" onclick="resetPw()">변경하기</button>
+							<button type="button" class="resetPw_button btn btn-primary" onclick="resetPw()">변경하기</button>
 						</div>
 
 					</div>
@@ -79,7 +79,7 @@ resetPw = function(){
 	var form = $("#reset_pw");
 	var pw = $("#pw").val();
 	var pw_ck = $("#pw_ck").val();
-	var RegExp = /^[a-zA-Z0-9]{4,12}$/; //pwassword 유효성 검사 정규식
+	var RegExp = /^(?=.*[a-zA-Z])((?=.*\d)(?=.*\W)).{8,16}$/;//password 유효성 검사 정규식
 
 		if (pw == "") {
 			alert("비밀번호를 입력하세요.");
@@ -97,7 +97,7 @@ resetPw = function(){
 
 		//패스워드 형식검사
 		if(!RegExp.test(pw_ck)){ 
-	    alert("Password는 4~12자의 영문 대소문자와 숫자로만 입력하여 주세요.");
+	    alert("비밀번호는 문자, 숫자, 특수문자가 각각 최소 1개 이상 포함, 최소 8자리로 입력하여 주세요.");
 	    return false;
 	}
 		

@@ -1,8 +1,11 @@
 package com.tp.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.tp.domain.ClubDTO;
 
 import com.tp.domain.MemberVO;
 import com.tp.domain.UsersVO;
@@ -110,4 +113,30 @@ public class UsersServiceImpl implements UsersService  {
 	}
 
 	
+	//신청한 신규 동호회 리스트
+	@Override
+	public List<ClubDTO> myApplyList(String id) throws Exception {
+		List<ClubDTO> list = mapper.myApplyList(id);
+		
+		return list;
+	}
+
+	@Override
+	public List<ClubDTO> myActiveList(java.lang.String id) throws Exception {
+		List<ClubDTO> list = mapper.myActiveList(id);
+		
+		return list;
+	}
+
+	@Override
+	public Long mypageDowncount(Long cno) throws Exception {
+		Long downResult = mapper.mypageDowncount(cno);
+		return downResult;
+	}
+	
+	@Override
+	public int clubWithdrawal(ClubDTO cdto) throws Exception {
+		int Result = mapper.clubWithdrawal(cdto);
+		return Result;
+	}
 }

@@ -6,11 +6,7 @@
             src: url(./font/SofiaSansCondensed-VariableFont_wght.ttf);
         }
 
-        *{
-            font-family:'휴먼매직체';
-            font-size: 20px;
-            color: rgba(5, 5, 5, 0.64);
-        }
+      
     
         /* tr:nth-child(2n+0){background-color: rgb(206, 235, 248);} */
         /* 상세보기 버튼 */
@@ -21,10 +17,20 @@
         75%{transform: rotate(-8deg);}
         100%{transform: rotate(0deg);}
         }
-    
-        .ani-button{
+    	.btn-outline-success {
+			color: #666666;
+			border-color: #0d6efd ;
+		}
+		
+		.btn-outline-success:hover {
+			color:white;
+			background-color: #0d6efd ;
+			border-color: #0d6efd ;
+		}
+		
+        /* .ani-button{
             color:tan;
-        }
+        } */
         .ani-button:hover{
         animation-name: shake;
         animation-duration: 1s;
@@ -33,7 +39,7 @@
             text-align: center;
         }
         td{
-            font-size: 25px;
+            /* font-size: 25px; */
             text-align: center;
            
         }
@@ -115,8 +121,13 @@
         select{
             border: none;
         }
-        .d-flex{
+        
+        .d-flexy{
             display: flex;
-            width: 300px;
-            margin-left: 5px;
-        };
+           /*  width: 300px; */
+           /*  margin-left: 5px; */
+        }
+        
+        .apply_col{
+        	width : 14% !important; 
+        }

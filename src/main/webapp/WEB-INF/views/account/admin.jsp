@@ -8,7 +8,7 @@
 
 <%@include file="../include/header.jsp"%>
 <link href="../resources/css/userAuthcss.css" rel="stylesheet" />
-
+<link rel="stylesheet" href="../resources/css/full.css">
 <div id="container" class="sub" data-menu-name="로그인">
 	<div class="container_align">
 		<div id="SUB-GNB">
@@ -75,9 +75,8 @@
 															maxlength="30" class="input_password">
 													</p>
 													<p class="submit">
-														<!-- <button type="submit" onclick="login();" class="login_button">로그인</button> -->
-														<input type="button" onclick="login_click();"
-															class="login_button" value="로그인">
+														<button type="button" onclick="login_click();"
+															class="login_button btn btn-primary" >로그인</button>
 													</p>
 												</div>
 											</fieldset>
@@ -94,6 +93,13 @@
 	</div>
 </div>
 <script>
+	//엔터처리
+	$('#id, #pw').on('keypress', function(e){	
+	  if(e.keyCode == '13'){
+		$('.login_button').click();
+	  }
+	  });
+	
 	//로그인 버튼 클릭 메서드
 	login_click = function() {
 		var form = $("#admin_loginForm");

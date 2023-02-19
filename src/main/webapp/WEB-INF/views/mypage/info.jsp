@@ -9,6 +9,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@include file="../include/header.jsp"%>
+<link rel="stylesheet" href="../resources/css/full.css">
+<link rel="stylesheet" href="../resources/css/mypage.css">
 </head>
 <body>
 	<div class="wrap">
@@ -160,9 +162,9 @@
 	<br>
 
 	<div class="text-center">
-		<p class="submit">
-			<input type="button" onclick="modify_submit()" class="modify_button" value="정보수정">
-			<input type="button" class="cancle_button" value="취소" onclick="location.href='/main'">
+		<p>
+			<input type="button" onclick="modify_submit()" class="modify_button btn-primary btn-lg" value="정보수정">
+			<input type="button" class="cancle_button btn-danger btn-lg" value="취소" onclick="location.href='/main'">
 		</p>
 	</div>
 	<script>
@@ -309,8 +311,14 @@ $(document).ready(function() {
     //2에 해당하는 sub category 리스트
     subObject = new Object();
     subObject.main_category_id = "2";
-    subObject.sub_category_id = "/applyList"
+    subObject.sub_category_id = "/activeList"
     subObject.sub_category_name = "활동 중 동호회"
+    subArray.push(subObject);
+    
+    subObject = new Object();
+    subObject.main_category_id = "2";
+    subObject.sub_category_id = "/applyList"
+    subObject.sub_category_name = "신규동호회 신청현황"
     subArray.push(subObject);
       
     //메인 카테고리 셋팅

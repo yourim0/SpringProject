@@ -100,49 +100,8 @@ hr {
 	background-color: currentColor;
 	border: 0;
 	opacity: 0.25;
-}
-
-hr
-
-
-
-
-:not
-
-
- 
-
-
-(
-[
-size
-]
-
-
- 
-
-
-)
-{
-height
-
-
-
-
-:
-
-
- 
-
-
-1
-px
-
-
-
-
-;
-}
+} hr:not([size])
+{height:1px;}
 h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
 	margin-top: 0;
 	margin-bottom: 0.5rem;
@@ -272,12 +231,13 @@ sup {
 }
 
 a {
-	color: lightslategray;
-	text-decoration: none;
+  color: #7986cb;
+  text-decoration: none;
+  outline: none;
 }
-
-a:hover {
-	color: #0a58ca;
+a:hover,
+a:focus {
+  color: #3f51b5;
 }
 
 a:not ([href] ):not ([class] ), a:not ([href] ):not ([class] ):hover {
@@ -359,6 +319,7 @@ thead, tbody, tfoot, tr, td, th {
 	border-color: inherit;
 	border-style: solid;
 	border-width: 0;
+	border-left: 1px solid #e0e0e0;
 }
 
 label {
@@ -374,7 +335,11 @@ button
 
 
 
+
+
 :focus
+
+
 
 
 
@@ -382,14 +347,18 @@ button
 :not
 
 
+
  
+
 
 
 (
 :focus-visible
 
 
+
  
+
 
 
 )
@@ -399,10 +368,14 @@ outline
 
 
 
+
+
 :
 
 
+
  
+
 
 
 0;
@@ -441,17 +414,23 @@ button
 
 
 
+
+
 :not
 
 
+
  
+
 
 
 (
 :disabled
 
 
+
  
+
 
 
 ),
@@ -464,17 +443,23 @@ button
 
 
 
+
+
 :not
 
 
+
  
+
 
 
 (
 :disabled
 
 
+
  
+
 
 
 ),
@@ -487,18 +472,24 @@ reset
 
 
 
+
+
 :not
+
 
 
 
 	
 
 
+
 (
 :disabled
 
 
+
  
+
 
 
 ),
@@ -511,17 +502,23 @@ submit
 
 
 
+
+
 :not
 
 
+
  
+
 
 
 (
 :disabled
 
 
+
  
+
 
 
 )
@@ -531,13 +528,19 @@ cursor
 
 
 
+
+
 :
+
 
 
  
 
 
+
 pointer
+
+
 
 
 
@@ -740,17 +743,23 @@ progress {
 
 
 
+
+
 :not
 
 
+
  
+
 
 
 (
 :last-child
 
 
+
  
+
 
 
 )
@@ -760,14 +769,20 @@ margin-right
 
 
 
+
+
 :
+
 
 
  
 
 
+
 0
 .5rem
+
+
 
 
 
@@ -1908,14 +1923,18 @@ margin-right
 :not
 
 
+
  
+
 
 
 (
 :first-child
 
 
+
  
+
 
 
 )
@@ -1925,26 +1944,36 @@ border-top
 
 
 
+
+
 :
 
 
+
  
+
 
 
 2
 px
 
 
+
  
+
 
 
 solid
 
 
+
  
 
 
+
 currentColor
+
+
 
 
 
@@ -1976,14 +2005,18 @@ currentColor
 :not
 
 
+
  
+
 
 
 (
 :first-child
 
 
+
  
+
 
 
 )
@@ -1993,10 +2026,14 @@ border-top-width
 
 
 
+
+
 :
 
 
+
  
+
 
 
 0;
@@ -2215,6 +2252,8 @@ border-top-width
 
 
 
+
+
 [
 type
 =
@@ -2224,24 +2263,32 @@ file
 
 
 
+
+
 :not
 
 
+
  
+
 
 
 (
 :disabled
 
 
+
  
+
 
 
 )
 :not
 
 
+
  
+
 
 
 (
@@ -2250,7 +2297,9 @@ readonly
 ]
 
 
+
  
+
 
 
 )
@@ -2260,13 +2309,19 @@ cursor
 
 
 
+
+
 :
+
 
 
  
 
 
+
 pointer
+
+
 
 
 
@@ -2491,24 +2546,32 @@ textarea.form-control-lg {
 
 
 
+
+
 :not
 
 
+
  
+
 
 
 (
 :disabled
 
 
+
  
+
 
 
 )
 :not
 
 
+
  
+
 
 
 (
@@ -2517,7 +2580,9 @@ readonly
 ]
 
 
+
  
+
 
 
 )
@@ -2527,13 +2592,19 @@ cursor
 
 
 
+
+
 :
+
 
 
  
 
 
+
 pointer
+
+
 
 
 
@@ -2590,11 +2661,15 @@ pointer
 
 
 
+
+
 [
 multiple
 ]
 ,
 .form-select
+
+
 
 
 
@@ -2606,10 +2681,14 @@ size
 
 
 
+
+
 :not
 
 
+
  
+
 
 
 (
@@ -2620,7 +2699,9 @@ size
 ]
 
 
+
  
+
 
 
 )
@@ -2630,14 +2711,20 @@ padding-right
 
 
 
+
+
 :
+
 
 
  
 
 
+
 1
 rem
+
+
 
 
 
@@ -2648,13 +2735,19 @@ background-image
 
 
 
+
+
 :
+
 
 
  
 
 
+
 none
+
+
 
 
 
@@ -2973,17 +3066,23 @@ none
 
 
 
+
+
 :not
 
 
+
  
+
 
 
 (
 :-moz-placeholder-shown
 
 
+
  
+
 
 
 )
@@ -2993,14 +3092,20 @@ padding-top
 
 
 
+
+
 :
+
 
 
  
 
 
+
 1
 .625rem
+
+
 
 
 
@@ -3011,14 +3116,20 @@ padding-bottom
 
 
 
+
+
 :
+
 
 
  
 
 
+
 0
 .625rem
+
+
 
 
 
@@ -3028,6 +3139,8 @@ padding-bottom
 .form-floating
 >
 .form-control
+
+
 
 
 
@@ -3035,14 +3148,18 @@ padding-bottom
 :not
 
 
+
  
+
 
 
 (
 :-ms-input-placeholder
 
 
+
  
+
 
 
 )
@@ -3052,14 +3169,20 @@ padding-top
 
 
 
+
+
 :
+
 
 
  
 
 
+
 1
 .625rem
+
+
 
 
 
@@ -3070,14 +3193,20 @@ padding-bottom
 
 
 
+
+
 :
+
 
 
  
 
 
+
 0
 .625rem
+
+
 
 
 
@@ -3087,6 +3216,8 @@ padding-bottom
 .form-floating
 >
 .form-control
+
+
 
 
 
@@ -3100,10 +3231,14 @@ padding-bottom
 
 
 
+
+
 :not
 
 
+
  
+
 
 
 (
@@ -3111,7 +3246,9 @@ padding-bottom
 
 
 
+
 	
+
 
 
 )
@@ -3121,14 +3258,20 @@ padding-top
 
 
 
+
+
 :
+
 
 
  
 
 
+
 1
 .625rem
+
+
 
 
 
@@ -3139,14 +3282,20 @@ padding-bottom
 
 
 
+
+
 :
+
 
 
  
 
 
+
 0
 .625rem
+
+
 
 
 
@@ -3265,35 +3414,45 @@ padding-bottom
 :not
 
 
+
  
+
 
 
 (
 :first-child
 
 
+
  
+
 
 
 )
 :not
 
 
+
  
+
 
 
 (
 .dropdown-menu
 
 
+
  
+
 
 
 )
 :not
 
 
+
  
+
 
 
 (
@@ -3301,42 +3460,54 @@ padding-bottom
 
 
 
+
 	
+
 
 
 )
 :not
 
 
+
  
+
 
 
 (
 .valid-feedback
 
 
+
  
+
 
 
 )
 :not
 
 
+
  
+
 
 
 (
 .invalid-tooltip
 
 
+
  
+
 
 
 )
 :not
 
 
+
  
+
 
 
 (
@@ -3344,7 +3515,9 @@ padding-bottom
 
 
 
+
 	
+
 
 
 )
@@ -3354,14 +3527,20 @@ margin-left
 
 
 
+
+
 :
+
 
 
  
 
 
+
 -1
 px
+
+
 
 
 
@@ -3372,10 +3551,14 @@ border-top-left-radius
 
 
 
+
+
 :
 
 
+
  
+
 
 
 0;
@@ -3384,10 +3567,14 @@ border-bottom-left-radius
 
 
 
+
+
 :
 
 
+
  
+
 
 
 0;
@@ -3695,26 +3882,26 @@ border-bottom-left-radius
 	border-color: #6c757d;
 }
 
-.btn-secondary:hover {
+./* btn-secondary:hover {
 	color: #fff;
 	background-color: #5c636a;
 	border-color: #565e64;
-}
+} */
 
-.btn-check:focus+.btn-secondary, .btn-secondary:focus {
+/* .btn-check:focus+.btn-secondary, .btn-secondary:focus {
 	color: #fff;
 	background-color: #5c636a;
 	border-color: #565e64;
 	box-shadow: 0 0 0 0.25rem rgba(130, 138, 145, 0.5);
-}
+} */
 
-.btn-check:checked+.btn-secondary, .btn-check:active+.btn-secondary,
+/* .btn-check:checked+.btn-secondary, .btn-check:active+.btn-secondary,
 	.btn-secondary:active, .btn-secondary.active, .show>.btn-secondary.dropdown-toggle
 	{
 	color: #fff;
 	background-color: #565e64;
 	border-color: #51585e;
-}
+} */
 
 .btn-check:checked+.btn-secondary:focus, .btn-check:active+.btn-secondary:focus,
 	.btn-secondary:active:focus, .btn-secondary.active:focus, .show>.btn-secondary.dropdown-toggle:focus
@@ -3995,7 +4182,7 @@ border-bottom-left-radius
 
 .btn-outline-secondary {
 	color: #6c757d;
-	border-color: #6c757d;
+	border-color: #3f51b5;
 }
 
 .btn-outline-secondary:hover {
@@ -4028,14 +4215,14 @@ border-bottom-left-radius
 }
 
 .btn-outline-success {
-	color: #198754;
-	border-color: #198754;
+	color: white;
+	border-color: #0d6efd ;
 }
 
 .btn-outline-success:hover {
-	color: #fff;
-	background-color: #198754;
-	border-color: #198754;
+	color:white;
+	background-color: #0d6efd ;
+	border-color: #0d6efd ;
 }
 
 .btn-check:focus+.btn-outline-success, .btn-outline-success:focus {
@@ -4272,17 +4459,23 @@ border-bottom-left-radius
 
 
 
+
+
 :not
 
 
+
  
+
 
 
 (
 .show
 
 
+
  
+
 
 
 )
@@ -4292,10 +4485,14 @@ opacity
 
 
 
+
+
 :
 
 
+
  
+
 
 
 0;
@@ -4305,17 +4502,23 @@ opacity
 
 
 
+
+
 :not
 
 
+
  
+
 
 
 (
 .show
 
 
+
  
+
 
 
 )
@@ -4325,13 +4528,19 @@ display
 
 
 
+
+
 :
+
 
 
  
 
 
+
 none
+
+
 
 
 
@@ -4730,17 +4939,23 @@ none
 
 
 
+
+
 :not
 
 
+
  
+
 
 
 (
 :first-child
 
 
+
  
+
 
 
 ),
@@ -4751,10 +4966,14 @@ none
 
 
 
+
+
 :not
 
 
+
  
+
 
 
 (
@@ -4762,7 +4981,9 @@ none
 
 
 
+
 	
+
 
 
 )
@@ -4772,14 +4993,20 @@ margin-left
 
 
 
+
+
 :
+
 
 
  
 
 
+
 -1
 px
+
+
 
 
 
@@ -4841,17 +5068,23 @@ px
 
 
 
+
+
 :not
 
 
+
  
+
 
 
 (
 :first-child
 
 
+
  
+
 
 
 ),
@@ -4862,18 +5095,24 @@ px
 
 
 
+
+
 :not
+
 
 
 
 	
 
 
+
 (
 :first-child
 
 
+
  
+
 
 
 )
@@ -4883,14 +5122,20 @@ margin-top
 
 
 
+
+
 :
+
 
 
  
 
 
+
 -1
 px
+
+
 
 
 
@@ -5666,17 +5911,23 @@ px
 	
 	
 	
+	
+	
 	:not
 	
 	
+	
 	 
+	
 	
 	
 	(
 	:last-child
 	
 	
+	
 	 
+	
 	
 	
 	)
@@ -5686,10 +5937,14 @@ px
 	
 	
 	
+	
+	
 	:
 	
 	
+	
 	 
+	
 	
 	
 	0;
@@ -5698,10 +5953,14 @@ px
 	
 	
 	
+	
+	
 	:
 	
 	
+	
 	 
+	
 	
 	
 	0;
@@ -5724,17 +5983,23 @@ px
 
 
 
+
+
 :not
 
 
+
  
+
 
 
 (
 :first-child
 
 
+
  
+
 
 
 )
@@ -5744,10 +6009,14 @@ border-top-left-radius
 
 
 
+
+
 :
 
 
+
  
+
 
 
 0;
@@ -5756,10 +6025,14 @@ border-bottom-left-radius
 
 
 
+
+
 :
 
 
+
  
+
 
 
 0;
@@ -5804,17 +6077,23 @@ border-bottom-left-radius
 
 
 
+
+
 :not
 
 
+
  
+
 
 
 (
 .collapsed
 
 
+
  
+
 
 
 )
@@ -5824,13 +6103,19 @@ color
 
 
 
+
+
 :
+
 
 
  
 
 
+
 #0c63e4
+
+
 
 
 
@@ -5841,13 +6126,19 @@ background-color
 
 
 
+
+
 :
+
 
 
  
 
 
+
 #e7f1ff
+
+
 
 
 
@@ -5858,16 +6149,22 @@ box-shadow
 
 
 
+
+
 :
 
 
+
  
+
 
 
 inset
 
 
+
  
+
 
 
 0
@@ -5875,11 +6172,15 @@ inset
 px
 
 
+
  
+
 
 
 0
 rgba
+
+
 
 
 
@@ -5890,6 +6191,8 @@ rgba
 0,
 0
 .125
+
+
 
 
 
@@ -5956,17 +6259,23 @@ rgba
 
 
 
+
+
 :not
 
 
+
  
+
 
 
 (
 :first-of-type
 
 
+
  
+
 
 
 )
@@ -5976,10 +6285,14 @@ border-top
 
 
 
+
+
 :
 
 
+
  
+
 
 
 0;
@@ -6776,17 +7089,23 @@ keyframes progress-bar-stripes { 0% {
 
 
 
+
+
 :not
 
 
+
  
+
 
 
 (
 .show
 
 
+
  
+
 
 
 )
@@ -6796,13 +7115,19 @@ display
 
 
 
+
+
 :
+
 
 
  
 
 
+
 none
+
+
 
 
 
@@ -6822,14 +7147,18 @@ none
 :not
 
 
+
  
+
 
 
 (
 :last-child
 
 
+
  
+
 
 
 )
@@ -6839,14 +7168,20 @@ margin-bottom
 
 
 
+
+
 :
+
 
 
  
 
 
+
 0
 .75rem
+
+
 
 
 
@@ -7712,11 +8047,15 @@ opacity
 
 
 
+
+
 :
 
 
 
+
  
+
 
 
 
@@ -7728,7 +8067,10 @@ transform
 
 
 
+
+
 :
+
 
 
 
@@ -7736,7 +8078,10 @@ transform
 
 
 
+
 none
+
+
 
 
 
@@ -7760,11 +8105,15 @@ opacity
 
 
 
+
+
 :
 
 
 
+
  
+
 
 
 
@@ -7776,7 +8125,10 @@ transform
 
 
 
+
+
 :
+
 
 
 
@@ -7784,7 +8136,10 @@ transform
 
 
 
+
 none
+
+
 
 
 
@@ -8184,24 +8539,32 @@ keyframes placeholder-wave { 100% {
 
 
 
+
+
 :not
 
 
+
  
+
 
 
 (
 :focus
 
 
+
  
+
 
 
 )
 :not
 
 
+
  
+
 
 
 (
@@ -8209,7 +8572,9 @@ keyframes placeholder-wave { 100% {
 
 
 
+
 	
+
 
 
 )
@@ -8219,20 +8584,28 @@ position
 
 
 
+
+
 :
 
 
+
  
+
 
 
 absolute
 
 
+
  
+
 
 
 !
 important
+
+
 
 
 
@@ -8243,21 +8616,29 @@ width
 
 
 
+
+
 :
 
 
+
  
+
 
 
 1
 px
 
 
+
  
+
 
 
 !
 important
+
+
 
 
 
@@ -8268,21 +8649,29 @@ height
 
 
 
+
+
 :
 
 
+
  
+
 
 
 1
 px
 
 
+
  
+
 
 
 !
 important
+
+
 
 
 
@@ -8293,15 +8682,21 @@ padding
 
 
 
+
+
 :
+
 
 
  
 
 
+
 0
 !
 important
+
+
 
 
 
@@ -8312,21 +8707,29 @@ margin
 
 
 
+
+
 :
 
 
+
  
+
 
 
 -1
 px
 
 
+
  
+
 
 
 !
 important
+
+
 
 
 
@@ -8337,20 +8740,28 @@ overflow
 
 
 
+
+
 :
 
 
+
  
+
 
 
 hidden
 
 
+
  
+
 
 
 !
 important
+
+
 
 
 
@@ -8361,13 +8772,19 @@ clip
 
 
 
+
+
 :
+
 
 
  
 
 
+
 rect
+
+
 
 
 
@@ -8383,8 +8800,12 @@ important
 
 
 
+
+
 ;
 white-space
+
+
 
 
 
@@ -8392,17 +8813,23 @@ white-space
 :
 
 
+
  
+
 
 
 nowrap
 
 
+
  
+
 
 
 !
 important
+
+
 
 
 
@@ -8413,15 +8840,21 @@ border
 
 
 
+
+
 :
+
 
 
  
 
 
+
 0
 !
 important
+
+
 
 
 
@@ -12454,161 +12887,43 @@ header.masthead h1, header.masthead .h1 {
 }
 
 footer.footer {
-	padding-top: 4rem;
-	padding-bottom: 4rem;
+	padding-top: 2rem;
+	padding-bottom: 2rem;
 }
 
 .video-box {
-	height: 500px;
-	width: 100%;
-	overflow: hidden;
-	position: relative;
+  height: 500px;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
 }
 
 .video-container {
-	position: absolute;
-	width: 100%;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	z-index: 0;
+  position: absolute;
+  width : 100%;
+  top: 50%;
+  left: 50%;
+  transform : translate(-50%,-50%);
+  z-index: 0;
 }
+
 
 /* ani button */
-@
-keyframes shake { 0%{
-	transform: rotate(0deg);
+@keyframes shake{
+  0%{transform: rotate(0deg);}
+  25%{transform: rotate(-8deg);}
+  50%{transform: rotate(8deg);}
+  75%{transform: rotate(-8deg);}
+  100%{transform: rotate(0deg);}
 }
 
-25%{
-transform
-
-
-
-
-
-
-:
-
-
-
- 
-
-
-
-rotate
-
-
-
-
-
-
-(-8
-deg
-
-
-
-
-);
+.ani-button:hover{
+  animation-name: shake;
+  animation-duration: 1s;
+  background-color: #0d6efd;
+  /* opacity: 0.3; */
 }
-50%{
-transform
 
-
-
-
-
-
-:
-
-
-
- 
-
-
-
-rotate
-
-
-
-
-
-
-(8
-deg
-
-
-
-
-);
-}
-75%{
-transform
-
-
-
-
-
-
-:
-
-
-
- 
-
-
-
-rotate
-
-
-
-
-
-
-(-8
-deg
-
-
-
-
-);
-}
-100%{
-transform
-
-
-
-
-
-
-:
-
-
-
- 
-
-
-
-rotate
-
-
-
-
-
-
-(0
-deg
-
-
-
-
-);
-}
-}
-.ani-button:hover {
-	animation-name: shake;
-	animation-duration: 1s;
-}
 
 /* 화면작게 애니매이션 */
 /* .white-box{
@@ -12619,90 +12934,104 @@ deg
   border: 0px solid white;
   transition: all 1s;
 } */
-.ani-img {
-	/* transform: rotate(90deg); */
-	/* 90도 회전 */
-	/* transform: translateX(100px); */
-	transform: scale(1.0);
-	/* 크기 변경*/
 
-	/* text-align: center; */
+.ani-img{
+  /* transform: rotate(90deg); */
+  /* 90도 회전 */
+
+  /* transform: translateX(100px); */
+  transform: scale(1.0);
+  /* 크기 변경*/
+
+  /* text-align: center; */
+
+}
+ .ani-img:hover{
+  animation-name : 왔다갔다;
+  animation-duration: 1s;
 }
 
-.ani-img:hover {
-	animation-name: 왔다갔다;
-	animation-duration: 1s;
-}
-
-@
-keyframes 왔다갔다 {
-	/*  @keyframes 복잡한 애니메이션 정의할때 쓴다 예전 간단한 
+@keyframes 왔다갔다 {
+  /*  @keyframes 복잡한 애니메이션 정의할때 쓴다 예전 간단한 
   a -> b 애니메이션들은 시작스타일, 최종스타일, 트리거, transition 주면 된다고 했습니다. 
   근데 a -> b -> a,  a -> 1초정지 -> b 같은 복잡한건 못합니다.
-  @keyframes를 쓰면 가능합니다*/ 0%{
-	/* 0%=> 진행도=>초시시작 숫자는 내가 정해도 된다.  */
-	transform: translateX(0px);
+  @keyframes를 쓰면 가능합니다*/
+
+  0%{
+      /* 0%=> 진행도=>초시시작 숫자는 내가 정해도 된다.  */
+      transform: translateX(0px);
+  }
+
+  50%{
+      transform: translateX(-100px);
+  }
+
+  100%{
+      transform: translateX(100px);
+  }
 }
-50%{
-transform
 
 
-
-
-
-
-:
-
-
-
- 
-
-
-
-translateX
-
-
-
-
-
-
-(-100
-px
-
-
-
-
-);
+.blinking1:hover {
+  /* -webkit-animation: blink 0.5s ease-in-out infinite alternate; */
+  /* -moz-animation: blink 0.5s ease-in-out infinite alternate; */
+  animation-name: blink;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
 }
-100%{
-transform
 
-
-
-
-
-
-:
-
-
-
- 
-
-
-
-translateX
-
-
-
-
-
-
-(100
-px
-
-
-
-
-);
+.blinking2:hover{
+  /* -webkit-animation: blink 0.5s ease-in-out infinite alternate; */
+  /* -moz-animation: blink 0.5s ease-in-out infinite alternate; */
+  animation-name: blink;
+  animation-iteration-count: infinite;
+  animation-fill-mode: none;
+  animation-duration: 1s;
 }
+
+
+
+
+@keyframes blink{
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+.header_nav_cus a{
+	font-family: '휴먼매직체';
+    font-size: 18px;
+    color: #666666;
+}
+
+.list_style {
+	list-style:none;
+}
+
+.hover_nav{
+	position: relative;
+}
+
+.hover_nav > ul{
+	display : none;
+	position: absolute;
+	text-align: left;
+	left: 0;
+	right: 0;
+	background : white;
+	padding-left : 0;
+	width:70px;
+} 
+
+.hover_nav > ul > li a{
+	
+	display:block; 
+	 width : 54.44px;
+	height:60px; 
+	line-height:60px; 
+	margin:0 auto;
+}
+
+.hover_nav:hover >ul{
+	display : block;
+	
 }

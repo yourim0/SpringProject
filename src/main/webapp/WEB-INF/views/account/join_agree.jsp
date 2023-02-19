@@ -9,6 +9,7 @@
 
 <%@include file="../include/header.jsp"%>
 <link href="../resources/css/userAuthcss.css" rel="stylesheet" />
+<link rel="stylesheet" href="../resources/css/full.css">
 <div id="container" class="sub" data-menu-name="회원가입">
 	<div class="container_align">
 		<div id="SUB-GNB">
@@ -497,10 +498,11 @@
 
 								</div>
 								<p class="order_box">
-								<button type="button" class="agree_button"
+								<button type="button" class="agree_button btn btn-priamry"
 							onclick="check_checked()">동의</button>
 									<!-- <a href="#"  onclick="check_checked">동의</a> --> 
-									<a href="#"class="true">취소</a>
+								<button type="button" class="agree_button btn btn-priamry"
+							onclick="location.href='/main'">취소</button>
 								</p>
 							</fieldset>
 						</form>
