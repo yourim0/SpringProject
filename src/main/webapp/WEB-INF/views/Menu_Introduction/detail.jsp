@@ -4,12 +4,11 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<link rel="stylesheet" href="../resources/css/full.css">
 <style>
 .like-content {
 	display: inline-block;
 	width: 100%;
-
 	font-size: 18px;
 	border-top: 10px dashed #eee;
 	text-align: center;
@@ -53,29 +52,26 @@
 	animation-duration: 0.65s;
 }
 
-@
-keyframes likeAnimation { 0% {
-	transform: scale(30);
+@keyframes likeAnimation { 0% {
+	transform: scale(3);
 }
-100%
-{
-transform
-:
- 
-scale
-(1);
- 
-}
-}
-</style>
+100%{transform:scale(1);}}
 
+.like-review .fa-heart{
+       display: none;
+        }
+
+.like-review .fa-heart.animate-like{
+            display: inline-block;    
+        }
+</style>
 
 <%@include file="../include/header.jsp"%>
 
 <div class="container" style="width: 100%; padding: 200px;">
 
 	<div class="row text-center" style="padding-bottom: 50px;">
-		<h1>동호회 상세보기</h1>
+		<h4>동호회 상세보기</h4>
 	</div>
 	<div class="card mb-3" style="max-width: 100%;">
 		<div class="row g-0">
@@ -98,37 +94,48 @@ scale
 								<div class="row input-group" style="margin-bottom: 10px;">
 									<div class="form-floating">
 										<input type="text" class="form-control light"
-											id="floatingInputGroup1" placeholder="Username"
-											readonly="readonly" value="club name"> <label
-											for="floatingInputGroup1">동호회 이름</label>
+											id="floatingInputGroup1" 
+											value="${list.content}" placeholder="Username" readonly="readonly">
 									</div>
 								</div>
 								<div class="row input-group" style="margin-bottom: 10px;">
 									<div class="form-floating">
-										<input type="text" class="form-control light"
-											id="floatingInputGroup1" placeholder="Username"
-											readonly="readonly" value="category"> <label
-											for="floatingInputGroup1">카테고리</label>
+										 <input type="text"class="form-control light" readonly="readonly"
+										 	value=<c:if test="${list.cate_num eq '01'}">
+												<c:out value="레저" />
+											</c:if>
+											<c:if test="${list.cate_num eq '02'}">
+												<c:out value="운동" />
+											</c:if>
+											<c:if test="${list.cate_num eq '03'}">
+												<c:out value="맛집" />
+											</c:if>
+											<c:if test="${list.cate_num eq '04'}">
+												<c:out value="스터디" />
+											</c:if> 
+											> 
+										 
+											
+											
 									</div>
 								</div>
 								<div class="row input-group" style="margin-bottom: 10px;">
 									<div class="form-floating">
-										<input type="text" class="form-control light"
-											id="floatingInputGroup1" placeholder="Username"
-											readonly="readonly" value="date"> <label
-											for="floatingInputGroup1">모임 주기</label>
+										<input type="text" name="meeting" class="form-control light" readonly="readonly"value="" >
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="like-content d-flex justify-content-end"
-					style="margin-right: 30px; padding-bottom: 15px;">
-					<button class="btn-secondary like-review">
-						<i class="fa fa-heart" aria-hidden="true"></i> Like
-					</button>
-				</div>
+				<div class="like-content d-flex justify-content-end" style="margin-right: 30px; padding-bottom: 15px;">
+       				 <button class="btn-secondary like-review" id="like">
+           				 <div class="like-container">
+                			<div class="like-cnt unchecked" id="like-cnt"></div>
+           				 </div>
+            			<i class="fa fa-heart" aria-hidden="true"></i> Like
+        			</button>
+    		</div>
 			</div>
 		</div>
 
@@ -142,11 +149,39 @@ scale
 			<p class="card-text">동호회 소개 내용. 동호회 소개 내용. 동호회 소개 내용. 동호회 소개 내용.
 				동호회 소개 내용. 동호회 소개 내용. 동호회 소개 내용. 동호회 소개 내용. 동호회 소개 내용. 동호회 소개 내용.
 				동호회 소개 내용.</p>
-			<a href="#" class="btn btn-primary">신청하기</a>
 		</div>
 		<div class="card-footer text-muted">다른 정보들 표시할 부분 ( Ex. 좋아요 수 ,
 			조회 수 등등 )</div>
 	</div>
 </div>
+
+
+<<script type="text/javascript">
+	var time = ${list.meeting_time}; 
+	var day= ${list.meeting_day};
+	
+	if(day == 0){
+		$("input[name=meeting]").attr("value" , "매주 월요일 " + time + "시 ");
+	}else if(day == 1){
+		$("input[name=meeting]").attr("value" , "매주 화요일 " + time + "시 ");
+	}else if(day == 2){
+		$("input[name=meeting]").attr("value" , "매주 수요일 " + time + "시 ");
+	}else if(day == 3){
+		$("input[name=meeting]").attr("value" , "매주 목요일 " + time + "시 ");
+	}else if(day == 4){
+		$("input[name=meeting]").attr("value" , "매주 금요일 " + time + "시 ");
+	}else if(day == 5){
+		$("input[name=meeting]").attr("value" , "매주 토요일 " + time + "시 ");
+	}else if(day == 6){
+		$("input[name=meeting]").attr("value" , "매주 일요일 " + time + "시 ");
+	}	
+	
+	 $(function () {
+	        $('.like-review').on('click', function (e) {
+	            $(this).children('.fa-heart').toggleClass('animate-like');
+
+	        });
+	    });
+</script>
 
 <%@include file="../include/footer.jsp"%>

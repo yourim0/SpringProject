@@ -6,35 +6,130 @@
    
 
 <%@include file="../include/header.jsp"%>
-
+<link rel="stylesheet" href="../resources/css/full.css">
    
-  <div class = "container" style="margin-top: 100px;">
-       <img src="../resources/images/golf1.jpg" width="100%" height="300px">
+  <div class="container" style="margin-top: 100px;">
+       <img src="../resources/images/hyerim.jpg" width="100%" height="400px">
 	</div>
 	
 	<div class="container">
 		<div class="row">
-		<form method="post" action="writerAction.jsp">
-			<table class="table table-striped"  border :1px solid #dddddd" > <%-- 홀,짝 행 구분 --%>
+		<form role="form" id="read" name="read" method="POST" autocomplete="off">
+			<input type="hidden" name="bno" value="${board.bno}">
+			<input type="hidden" name="replayPage" value="1">
+			
+			<table class="table table-stripped"  border :1px solid #dddddd" > <%-- 홀,짝 행 구분 --%>
 				<tbody>
 					<tr>
-						<td>골프동호회 15회 정기활동</td>
+						<td>게시글 번호 : ${board.bno}</td> 
+						<%-- <input class="form-control" name="bno" value='<c:out value="${ board.bno }" />' readonly="readonly" /> --%>
 					</tr>
-						<td>작성자:RYAN | 작성일:2022년 1월 20일 11시 11분 11초 | 조회:5</td>
 					<tr>
-						<td><textarea type="text" class="form-control" name="bbsContent" maxlength="4000" style="height:350px;"></textarea></td>
+						<td>카테고리 : 
+							 <select id="cate_num" name="cate_num">
+								<option>--카테고리 선택--</option> 
+								<c:forEach items="${cateList}" var="category">
+									<option value="${category.cate_num}"<c:if test="${category.cate_num == board.cate_num}">selected="selected"</c:if>>${category.cate_kind}</option>
+								</c:forEach>
+							</select> 
+						</td>  
 					</tr>
-						<td>15회차도 즐겁게끝났습니다!</td>
+					<tr>
+						<td>제목: 
+							<textarea type="text" class="form-control" name="title">${board.title}</textarea>
+						</td>  
+					</tr>
+						<td>작성자 :  ${board.id} | 작성일 :  ${board.reg_date} | 조회 : ${board.mod_date}</td>
+					<tr>
+						<td>내용  : 
+						<textarea type="text" class="form-control" name="content" maxlength="4000px" style="height:350px;">${board.content}</textarea>
+						</td>
+					</tr>
+					<tr>
+						<c:forEach items="${file}" var="file">
+                  		<td>
+							<img alt="첨부파일이미지" src="../resources/images/file_icon.png">
+							첨부파일 : 
+                     		<a href="javascript:fileDownload();">${file.realFileName}</a>
+                     		<input type="hidden" name="fileName" value="${file.fileName}">
+                     		<input type="hidden" name="uuid" value="${file.uuid}">
+                  		</td>
+                  		</c:forEach>
+					</tr>
 				</tbody>
-			</table>	
-			<div class="btn-groupp" role="group" aria-label="Basic example" style="text-align:end;">
-					  <button type="button" class="btn btn-primary">수정하기</button>
-					  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">삭제하기</button>
-					  <button type="button" class="btn btn-primary" onclick="location.href='/home/freeboard'">목록보기</button>
-					 <!-- Button trigger modal -->
+			</table>
+			
+			<!-- 댓글 모달 코드 추가 -->
+			<div class='row'>
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<i class="fa fa-comments fa-fw"></i> Reply
+							<div class="input-group mb-7" >
+						  		<input type="text" id="replyReg" class="form-control" placeholder="댓글을 입력해주세요!" aria-describedby="button-addon2">
+						  		<button id='regBtn' type="button" class="btn btn-primary">등록하기</button>
+							</div>
+						</div>
 						
-					  <!-- Modal -->
-			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="panel-body">
+							<ul class="chat">
+			 					<li class="left clearfix" data-rno='12'>
+									<div>
+										
+									</div>
+								</li> 
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- 새 댓글 추가 모달창 -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+				aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">Reply</h4>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label>댓글</label>
+					<input class="form-control"	name='reply' value='New Reply!!!!'>
+				</div>
+				<div class="form-group">
+					<label>아이디</label>
+					<input class="form-control"	name='replyer' value='${board.id}'>
+				</div>
+				<div class="form-group">
+					<label>댓글 등록일</label>
+					<input class="form-control"	name='replyDate' value='${reply.reg_date}'>
+				</div>
+			</div>
+			<div class="modal-footer">
+ 				<button id='modalModBtn' type="button" class="btn btn-primary">Modify</button>
+				<button id='modalRemoveBtn' type="button" class="btn btn-primary">Remove</button>
+				<button id='modalRegisterBtn' type="button" class="btn btn-primary">Register</button>
+				<button id='modalCloseBtn' type='button' class='btn btn-default'>Close</button>
+		    </div>
+					</div>
+				</div>
+			</div>
+			
+		
+			<div class="btn-group" role="group" aria-label="Basic example" style="text-align:end;">
+				<!-- 로그인 유저랑 일치하는지 확인된 본인만 수정/삭제가 가능 -->
+				<%-- <c:if test="${board.id == users.id }">  --%>
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modifyModal" onclick="clickMod()">수정</button>
+				<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#deleteModal" onclick="clickDel()">삭제</button>
+				<%-- </c:if>	  --%> 
+				 <button type="reset" class="btn btn-primary" onclick="history.back()">목록보기</button>
+				 <!-- Button trigger modal -->
+						
+			<!-- Delete-Modal -->
+			<%-- <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
 			      <div class="modal-header">
@@ -43,20 +138,248 @@
 			          <span aria-hidden="true">&times;</span>
 			        </button>
 			      </div>
+			      
 			      <div class="modal-body">
 			       <p>게시물을 정말 삭제하시겠습니까?</p>
 			      </div>
+			      
 			      <div class="modal-footer">
-			      	<button type="button" class="btn btn-primary">삭제하기</button>
-			       	<button type="button" class="btn btn-secondary" data-dismiss="modal">취소하기</button>
+			      	<input type="hidden" name="bno" value="${board.bno }"/>
+			      	<button type="submit" class="btn btn-primary">확인</button>
+			       	<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="location.href='/board/list'">취소</button>
 			      </div>
+			      
 			    </div>
 			  </div>
-			</div>
-			</div>
+			</div> --%>
+			
+			<!-- Modify-Modal -->
+			<%-- <div class="modal fade" id="modifyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">게시물 수정</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>--%>
+		</div><!--end btn-group -->
+		
+
 			
 		</form>
 		</div>
 	</div>		
+<script type="text/javascript" src="/resources/js/reply.js"></script>
+<script type="text/javascript">
+
+	/* //폼을 변수에 저장
+	var formObj = $("form[role='form']");
+	 
+	// delete 버튼 클릭
+	 $("#delete_btn").click(function(){
+		 
+		 formObj.attr("action", "/board/delete?bno=" + $("#bno").val());
+         formObj.attr("method", "get");    
+         formObj.submit();   
+	 });
+	
+	 $("#modify_btn").click(function(){
+			 
+		 formObj.attr("action", "/board/modify?bno=" + $("#bno").val());
+         formObj.attr("method", "get");    
+         formObj.submit();   
+	 });
+ */
+ 
+ 	function clickDel() {
+		document.read.action = "/board/delete";
+		document.read.submit();
+	}
+ 
+	function clickMod() {
+		document.read.action = "/board/update";
+		document.read.submit();
+	}
+	
+	/* 게시물의 작성하기 클릭했을때 작성하기 폼으로 이동하는 이벤트 처리 */
+	$("#replyForm").on("click",function(e) {
+			e.preventDefault();
+			actionForm
+					.append("<input type='hidden' name='bno' value='"+ $(this).attr("href")+ "'>");
+			actionForm.attr("action","../board/register");
+			actionForm.submit();
+	});
+
+	$(document).ready(function() {
+		var form = $("#read");
+		var page = $("input[name=bno]").val();
+		var replayPage = $("input[name=replayPage]").val();
+		var replyUL = $(".replyList");
+		var str = "";
+		$.ajax({
+			url: '/replies/pages/'+page+'/'+replayPage,
+			/* processData: false, */
+			/* contentType: false, */
+			data: form,
+			type: 'get',
+			dataType: 'json',
+			success: function (result) {
+				var str="";
+				for (var i = 0, len = result.length || 0; i < len; i++) {
+					 str +="<li class='left clearfix' data-rno='"+result[i].rno+"'>";
+			         str +="  <div><div class='header'><strong class='primary-font'>["
+			    	   +result[i].rno+"] "+result[i].id+"</strong>"; 
+			         str +="    <small class='pull-right text-muted'>"
+			           +result[i].reg_date+"</small></div>";
+			         str +="    <p>"+result[i].reply+"</p></div></li>";
+				}
+				
+				replyUL.html(str);
+			}
+		});
+		
+	});
+	
+	
+	/* 댓글 전체 목록 보여주기 + 모달창 */
+	$(function(){	
+		var bnoValue = '<c:out value="${board.bno}"/>';
+  		var replyUL = $(".chat");
+  
+    	showList(1);
+    	
+    	//댓글 리스트에 댓글 보여주는 기능
+    	var modal = $(".modal");
+   	    var modalInputReply = modal.find("input[name='reply']");
+   	    var modalInputReplyer = modal.find("input[name='replyer']");
+   	    var modalInputReplyDate = modal.find("input[name='replyDate']");
+   	    
+   	    var modalModBtn = $("#modalModBtn");
+   	    var modalRemoveBtn = $("#modalRemoveBtn");
+   	    var modalRegisterBtn = $("#modalRegisterBtn");
+   	    
+   	    // 모달창 Close 눌러서 닫아 지게 하는 기능
+	   	$("#modalCloseBtn").on("click", function(e){
+	     	
+	     	modal.modal('hide');
+	    });
+    	
+   	    // 처음 새 댓글을 등록할 때, 날짜, 수정, 삭제 기능은 가려지게 하는 기능
+    	$("#addReplyBtn").on("click", function(e){
+    	      
+    		  modal.find("input").val("");
+    	      modalInputReplyDate.closest("div").hide();
+    	      modal.find("button[id !='modalCloseBtn']").hide();
+    	      
+    	      modalRegisterBtn.show();
+    	      
+    	      $(".modal").modal("show");
+    	      
+    	});
+   	    
+   	    // 댓글 조회 클릭 이벤트 처리
+   	    // chat의 하위태그인 li에 클릭 이벤트를 준다.
+   	    $(".chat").on("click", "li", function(e){
+   	    	// this-> 현재 이벤트를 발생시키는 대상 즉 li임. data 속성에 담긴 rno(댓글번호) 를 변수에 담는다.
+   	    	var rno = $(this).data("rno");
+   	    	replyService.get(rno, function(reply){
+   	    		// input 태그의 name이 'reply' 의 값 
+   	    		modalInputReply.val(reply.reply);
+   	    	
+   	    		// 읽어온 글번호를 data에 다시 담아준다. (나중에 수정이나 삭제를 해야하기 때문에)
+   	    		modal.data("rno", reply.rno);
+   	    		
+   	    		// 모달의 button 중, id가 modalCloseBtn이 아닌 것들은 모두 숨긴다.
+   	    		modal.find("button[id !='modalCloseBtn']").hide();
+   	    		// 모달의 modify 버튼 보여주기
+   	    		modalModBtn.show();
+   	    		// 모달의 remove 버튼 보여주기
+   	    		modalRemoveBtn.show();
+   	    		
+   	    		$(".modal").modal("show");
+   	    	});
+   	    });
+   	    
+   	    // 댓글의 수정 이벤트 처리 (JSON 형식)
+   	    modalModBtn.on("click", function(e){
+   	    	// rno : modal.data("rno")-> 위의 댓글 조회에서 받아온 data속성의 값을 rno의 값으로 지정한다.
+   	    	var reply = {rno:modal.data("rno"), reply:modalInputReply.val()};
+   	    	replyService.update(reply, function(result){
+   	    		alert(result);
+   	    		modal.modal("hide");
+   	    		showList(1);
+   	    	});
+   	    });
+   	    
+   	    // 댓글의 삭제 이벤트 처리
+   	 	modalRemoveBtn.on("click", function(e){
+   	 		var rno = modal.data("rno");
+   	 		replyService.remove(rno, function(result){
+   	 			alert(result);
+   	 			modal.modal("hide");
+   	 			showList(1);
+   	 		});
+   	 	});
+   	    
+   	    
+	});
+	
+	function showList(page){
+		var bnoValue = '<c:out value="${board.bno}"/>';
+		var replyUL = $(".chat");
+		replyService.getList({bno:bnoValue,page: page || 1 }, function(list) {
+			 var str="";
+ 
+		     if(list == null || list.length == 0){
+		       return;
+		     }
+		     
+		     for (var i = 0, len = list.length || 0; i < len; i++) {
+		         str +="<li class='left clearfix' data-rno='"+list[i].rno+"'>";
+		         str +="  <div><div class='header'><strong class='primary-font'>["
+		    	   +list[i].rno+"] "+list[i].replyer+"</strong>"; 
+		         str +="    <small class='pull-right text-muted'>"
+		           +replyService.displayTime(list[i].replyDate)+"</small></div>";
+		         str +="    <p>"+list[i].reply+"</p></div></li>";
+ 			 }
+ 
+			 replyUL.html(str);
+		     
+		});  //end function
+	} //end showList 
+	
+	//상세보기에 파일 다운로드 할수있는 기능
+	function fileDownload(fileName){
+	      document.read.method="get";
+	      document.read.action = "/board/download";
+	      document.read.submit();
+	   }
+	
+	//새 댓글 등록하기 기능
+	$('#regBtn').click(function() {
+		var reply = {
+				reply: $("#replyReg").val(),
+				bno : $("input[name=bno]").val(),
+				id : 'Zang' 
+		};
+		
+		$.ajax({
+			url: '/replies/new',
+			data : JSON.stringify(reply),
+			type: 'POST',
+			contentType : "application/json; charset=utf-8",
+			success: function (result) {
+				
+	        }
+	    });
+		
+		$("#read").attr("method","get");
+		$("#read").attr("action","/board/read?bno="+$("input[name=bno]").val());
+		$("#read").submit();
+		//showList(1); //댓글 재조회
+	});
+	
+</script>
 	
 <%@include file="../include/footer.jsp"%>

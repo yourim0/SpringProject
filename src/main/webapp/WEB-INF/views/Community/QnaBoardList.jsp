@@ -1,4 +1,4 @@
- <%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -6,86 +6,179 @@
    
 
 <%@include file="../include/header.jsp"%>
-<link rel="stylesheet" href="../resources/css/Main.css">
+<!-- <link rel="stylesheet" href="../../resources/css/Main.css"> -->
    
+<!-- <link rel="stylesheet" href="../resources/css/bootstrap.min_1.css"> -->
+<link rel="stylesheet" href="../resources/css/swiper.css">
+<link rel="stylesheet" href="../resources/css/common.css">
+<link rel="stylesheet" href="../resources/css/respon.css">
+<link rel="stylesheet" href="../resources/css/full.css">
 
-	<div class = "container" style="margin-top: 100px;">
-       <img src="../resources/images/baseball.jpg" width="100%" height="300px">
-	<div class="container">
-	
+<div class = "container" style="padding-top: 150px;">
+      <img src="../resources/images/hyerim.jpg" width="100%" height="300px">
+</div>
+   
+<div class="content respon2">
+<form id="listForm" action="/qnaboard/qnalist" method="post">     
+    <!-- <div class="table-group"> -->
+   <section class="list_box">
+      <!-- <div class="container text-center"> -->
+      <div class="board_list">
+         <div class="row">
+             <div class="list_searchbox">
+                <div class="total_num"></div>
+                <div class="search_group mbNone">
+                  <select id="cate_num" name="cate_num" style="margin-right:7px;">
+                     <option value="">카테고리 검색</option> 
+                     <c:forEach items="${cateList}" var="category">
+                        <option value="${category.cate_num}"<c:if test="${category.cate_num == board.cate_num}">selected="selected"</c:if>>${category.cate_kind}</option>
+                     </c:forEach>
+                  </select>     
+                  <!-- <select name="type" data-msg="선택해주세요." required> -->
+                  <select name="type" style="margin-right:7px;">
+                        <option value=""<c:if test="${board.type == ''}">selected="selected"</c:if>>전체검색</option>
+                        <option value="title"<c:if test="${board.type == 'title'}">selected="selected"</c:if>>제목</option>
+                        <option value="content"<c:if test="${board.type == 'content'}">selected="selected"</c:if>>내용</option>
+                  </select> 
+                  <input type="text" name='keyword' value='<c:out value="${ board.keyword }" />' style="margin-right:7px;" data-msg="입력해주세요." /><!--  required -->
+                  <input type='hidden' name='pageNum' value='<c:out value="${ board.pageNum }" />' />
+                  <input type='hidden' name='amount' value='<c:out value="${ board.amount }" />' /> 
+                  <button class='btn_blue' onclick="search();">Search</button>
+                  
+                  <div>
+                     <button id="writeForm" class="btn btn-outline-info btn_free_cus" onclick="location.href='../qnaboard/register'">작성하기</button>
+                  </div>
+               </div>    
+             </div>
+         </div>
+      </div>  
+       
+               
+       <div class="board_list">
+         <!-- 게시물 목록 테이블(표) --> 
+         <table class="list_tbl" style="width: 100%; text-align:center;">
+            <thead>
+               <tr>
+                  <th scope="col">번호</th>
+                  <th scope="col">유형</th>
+                  <th scope="col">제목</th>
+                  <th scope="col">작성자</th>
+                  <th scope="col">작성일</th>
+                  <th scope="col">답변여부</th>
+               </tr>
+            </thead>
+               <c:forEach items="${list}" var="board">
+                  <tr>
+                  <td class="align-middle align-middle">
+                     <c:out value="${board.bno}" />
+                  </td>
+                  <td class="align-middle align-middle">
+                     <c:out value="${board.cate_kind}" />
+                  </td>
+                  <td class="align-middle align-middle">
+                      <c:if test="${board.secret_type == '1'}">
+                         <i class="bi bi-lock"></i>
+                      </c:if>
+                     <a href="/qnaboard/read?bno=${board.bno }" >
+                        <c:out value="${board.title}" />
+                     </a>
+                  </td>
+                     <td class="align-middle align-middle">
+                        <c:out value="${board.id}" />
+                     </td>
+                     <td class="align-middle align-middle">
+                        <fmt:formatDate value="${board.reg_date}" pattern="yyyy-MM-dd" />
+                     </td>
+                     <td class="align-middle align-middle">
+                        <c:if test="${board.ans_type == 'Y'}">
+                           답변완료
+                        </c:if>
+                        <c:if test="${board.ans_type == 'N'}">
+                           미답변
+                        </c:if>
+                     </td>
+                  </tr>
+               </c:forEach>
+            </table>
+          </div>
+ 
+<!-- 페이징 처리 -->
+<div class='pull-right'>
+   <ul class="pagination">
+      <c:if test="${pageMaker.prev}">
+             <li class="paginate_button previous"><a href="${ pageMaker.startPage-1 }">Previous</a>
+             </li>
+           </c:if>
 
-     
-    <div class="table-group">
-        <table  width="100%">
-	        <tr>
-	        
-	        	<td align="center">
-	        		<select name="searchField"  style="padding: 10px; border-radius: 5px;" >
-	        			<option value="title">전체검색</option>
-	        			<option value="content">제목</option>
-	        			<option value="content">작성자</option>
-	        		</select>
-	        		<input type="text" name="searchWord"  style="padding: 10px; width: 270px; border-radius: 5px;"/>
-	        		<input type="submit" value="검색하기"  style="padding: 10px; border-radius: 5px;"/>		
-		        </td>
-		        <td><button type="button"  style="padding: 10px; border-radius: 5px;" onclick="location.href='/home/qnawrite'">작성하기</button></td>
-	       	
-	        </tr>		
-        </table>
-     	
-     	<!-- 게시물 목록 테이블(표) -->
-    	<table class="table table-striped" style="width: 100%;">    
-   			<tr>
-	            <th>번호</th>
-	            <th>유형</th>
-	            <th>제목</th>
-	            <th>작성자</th>
-	            <th>작성일</th>
-	        </tr>
-	        <tr>
-	            <td>1</td>
-	            <td>장혜림</td>
-	            <td><i class="bi bi-lock"></i><a href="/home/qnadetail">동아리관련문의입니다.</a></td>
-	            <td>2</td>
-	            <td>2023/01/01</td>
-	            
-	        </tr>
-	        <tr>
-	            <td>2</td>
-	            <td>이병일</td>
-	            <td><i class="bi bi-lock"></i><a href="/home/qnadetail">동아리관련문의입니다.</a></td>
-	            <td>2</td>
-	       		<td>2023/01/01</td>
-	        </tr>
-	        <tr>
-	            <td>3</td>
-	            <td>양형준</td>
-	            <td><i class="bi bi-lock"></i><a href="/home/qnadetail">동아리관련문의입니다.</a></td>
-	            <td>2</td>
-	   			<td>2023/01/01</td>
-			 </tr>
-	        <tr>
-	            <td>4</td>
-	            <td>김유림</td>
-	            <td><i class="bi bi-lock"></i><a href="/home/qnadetail">동아리관련문의입니다.</a></td>
-	            <td>2</td>
-	     		<td>2023/01/01</td>  		
-	        </tr>
-	    </table>
-    </div>
-	<div class="d-flex justify-content-center">
-       <ul class="pagination mt-3 mb-0">
-          <li class="disabled page-item"><a href="#"
-             class="page-link">‹</a></li>
-          <li class="active page-item"><a href="#"
-             class="page-link">1</a></li>
-          <li class="page-item"><a href="#" class="page-link">2</a></li>
-          <li class="page-item"><a href="#" class="page-link">3</a></li>
-          <li class="page-item"><a href="#" class="page-link">4</a></li>
-          <li class="page-item"><a href="#" class="page-link">5</a></li>
-          <li class="page-item"><a href="#" class="page-link">›</a></li>
-          <li class="page-item"><a href="#" class="page-link">»</a></li>
-       </ul>
-    </div>
-	
+           <c:forEach var="num" begin="${pageMaker.startPage}"
+             end="${pageMaker.endPage}">
+             <li class="paginate_button ${ pageMaker.cri.pageNum == num ? "active":"" } "><a href="${ num }">${num}</a></li>
+           </c:forEach>
+
+           <c:if test="${pageMaker.next}">
+             <li class="paginate_button next"><a href="${ pageMaker.endPage + 1 }">Next</a></li>
+           </c:if>
+   </ul>
+</div>
+
+<script type="text/javascript">
+/* 게시물의 작성하기 클릭했을때 작성하기 폼으로 이동하는 이벤트 처리 */
+   $("#writeForm").on("click",function(e) {
+         e.preventDefault();
+         actionForm
+               .append("<input type='hidden' name='bno' value='"+ $(this).attr("href")+ "'>");
+         actionForm.attr("action","../qnaboard/registerProc");
+         actionForm.submit();
+   });
+   
+   
+   //페이징처리
+   var listForm = $("#listForm");
+   $(".paginate_button a").on("click",function(e) {
+      e.preventDefault();
+      //console.log("click");
+      //listForm.find("input[name='pageNum']").val($(this).attr("href"));
+      $("input[name='pageNum']").val($(this).attr("href"));
+      listForm.submit();
+   });
+   
+   /* 게시물의 제목을 클릭했을 떄 이동하도록 이벤트 처리 */
+   $("#move").on("click",function(e) {
+         e.preventDefault();
+         actionForm
+               .append("<input type='hidden' name='bno' value='"+ $(this).attr("href")+ "'>");
+         actionForm.attr("action","/qnaboard/read?bno=" + $("#bno").val());
+         actionForm.submit();
+   });
+   
+   //게시글 검색
+   function search(){
+      
+       var name;
+       
+       $( '#listForm' ).find('select, input').each(function(){
+
+          if( !$(this).prop('required')){   //required 속성이 없을때
+
+           } else {   //required 속성이 있을때
+               if ($(this).val() == "" ) {
+                  //alert($( this ).attr( 'name' ) +"val"+ $(this).val());
+                  var msg = $(this).data("msg");
+                   alert(msg);
+                   //name = $( this ).attr( 'name' );
+                   //fail_log += name + " is required \n";
+                   
+                   return false;
+               }
+
+           }
+       });
+       //검색할때..1부터 다시 검색해야 제대로 나오니까..1로 하는거야
+       //검색할땐 당연히 검색조건이 변경되거나 그대로 일수있으니까 1로 주는거..1~10까지 이렇게
+       $("input[name='pageNum']").val(1);
+       
+      //$("#listForm").attr("action","/board/list").submit();
+   }
+</script>   
+   
 <%@include file="../include/footer.jsp"%>
