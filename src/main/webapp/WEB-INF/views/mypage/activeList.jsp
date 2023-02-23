@@ -302,16 +302,5 @@
 
 					});
 	</script>
-	<script>
-	//탈퇴하기 버튼
- //	$(".withDrawalBtn").click(function(){
-/* 		var list_status = ${statusResult}
-		if(list_status != 0){
-			$(".withDrawalBtn").remove();
-			$(".withDrawalBtn").append("탈퇴 완료");
-		}  */
-//	});
-	
-</script>
 
 	<%@include file="../include/footer.jsp"%>

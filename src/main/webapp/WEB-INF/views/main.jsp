@@ -1,4 +1,5 @@
 
+<%@page import="java.util.Random"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -12,6 +13,15 @@
 	<video class="video-container" autoplay muted loop>
 		<source src="../resources/images/people.mp4" type="video/mp4"><source>
 </div>
+
+<script>
+
+function random(n) {
+    return (Math.floor(Math.random()*10)%6);
+}
+</script>
+
+
 <section class="features-icons bg-light text-center">
 	<div class="container">
 		<div class="row">
@@ -23,141 +33,90 @@
 		<div class="row">
 			<div id="bestview"
 				class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-1">
-				<div class="col">
-					<div class="card shadow-sm">
-						<img class="bd-placeholder-img card-img-top" width="100%"
-							height="225" src="../resources//images/climb.jpg" role="img"
-							focusable="false">
-						<div class="card-body">
-							<p class="card-text">Mountain-Climbing</p>
-							<div class="d-flex justify-content-between align-items-center">
-								<div class="btn-group">
-									<button type="button"class="btn btn-sm btn-outline-secondary ani-button">상세보기</button>
+				
+				<c:forEach items="${list1}" var="list">
+					<div class="col">
+						<div class="card shadow-sm">
+								<script language="JavaScript">
+									var ch = ${list.cate_num};
+									
+									if(ch == 01 ){
+										console.log("카테고리 01 레저  : " + ch);
+									    document.write( '<img src="../resources/images/레저1'
+									    		 +'.jpg" width="100%" height="225px" border="0">');
+									}else if(ch == 02){
+										console.log("카테고리 02 운동  : " + ch);
+									    document.write( '<img src="../resources/images/운동2'
+									    		 +'.jpg" width="100%" height="225px" border="0">');
+									}else if(ch == 03){
+										console.log("카테고리 03 맛집 : " + ch);
+									    document.write( '<img src="../resources/images/맛집3'
+									    		 +'.jpg" width="100%" height="225px" border="0">');
+									}else{
+										console.log("카테고리 04 스터디 : " + ch);
+									    document.write( '<img src="../resources/images/스터디1'
+									    		 +'.jpg" width="100%" height="225px" border="0">');
+									}
+							    </script>
+							<div class="card-body">
+								<p class="card-text"><i>${list.rnum}위</i>&nbsp&nbsp&nbsp<b>${list.club_name}</b> </p>
+								<div class="d-flex justify-content-between align-items-center">
+									<div class="btn-group">
+										<button type="button" class="btn btn-sm btn-outline-secondary ani-button" 
+										 onclick="location.href='/club/detail?cno=${list.cno}'">상세보기</button>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col">
-					<div class="card shadow-sm">
-						<img class="bd-placeholder-img card-img-top" width="100%"
-							height="225" src="../resources//images/맛집.jpg" role="img"
-							focusable="false">
-						<div class="card-body">
-							<p class="card-text">Food-Trip</p>
-							<div class="d-flex justify-content-between align-items-center">
-								<div class="btn-group">
-									<button type="button"
-										class="btn btn-sm btn-outline-secondary ani-button">상세보기</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card shadow-sm">
-						<img class="bd-placeholder-img card-img-top" width="100%"
-							height="225" src="../resources//images/골프.png" role="img"
-							focusable="false">
-						<div class="card-body">
-							<p class="card-text">Golf</p>
-							<div class="d-flex justify-content-between align-items-center">
-								<div class="btn-group">
-									<button type="button"
-										class="btn btn-sm btn-outline-secondary ani-button">상세보기</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card shadow-sm">
-						<img class="bd-placeholder-img card-img-top" width="100%"
-							height="225" src="../resources/images/footsoccer.avif" role="img"
-							focusable="false">
-
-						<div class="card-body">
-							<p class="card-text">Soccer</p>
-							<div class="d-flex justify-content-between align-items-center">
-								<div class="btn-group">
-									<button type="button"
-										class="btn btn-sm btn-outline-secondary ani-button">상세보기</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+				</c:forEach>
 			</div>
 			<div id="newview"
 				class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-1">
-				<div class="col">
-					<div class="card shadow-sm">
-						<img class="bd-placeholder-img card-img-top" width="100%"
-							height="225" src="../resources//images/horse.jpg" role="img"
-							focusable="false">
-
-						<div class="card-body">
-							<p class="card-text">Horse riding</p>
-							<div class="d-flex justify-content-between align-items-center">
-								<div class="btn-group">
-									<button type="button"
-										class="btn btn-sm btn-outline-secondary ani-button">상세보기</button>
+				
+				
+					<c:forEach items="${list2}" var="list">
+					<div class="col">
+						<div class="card shadow-sm">
+						 <!-- 사진만 카테고리별로 변경  -->
+							<!-- <img class="bd-placeholder-img card-img-top" width="100%"
+								height="225" src="../resources//images/climb.jpg" role="img"
+								focusable="false"> -->
+								<script language="JavaScript">
+									var ch = ${list.cate_num};
+									
+									if(ch == 01 ){
+										console.log("카테고리 01 레저  : " + ch);
+									    document.write( '<img src="../resources/images/레저1'
+									    		 +'.jpg" width="100%" height="225px" border="0">');
+									}else if(ch == 02){
+										console.log("카테고리 02 운동  : " + ch);
+									    document.write( '<img src="../resources/images/운동2'
+									    		 +'.jpg" width="100%" height="225px" border="0">');
+									}else if(ch == 03){
+										console.log("카테고리 03 맛집 : " + ch);
+									    document.write( '<img src="../resources/images/맛집3'
+									    		 +'.jpg" width="100%" height="225px" border="0">');
+									}else{
+										console.log("카테고리 04 스터디 : " + ch);
+									    document.write( '<img src="../resources/images/스터디1'
+									    		 +'.jpg" width="100%" height="225px" border="0">');
+									}
+							    </script>
+							<div class="card-body">
+								<p class="card-text"><i>${list.rnum}위</i> &nbsp&nbsp&nbsp  <b>${list.club_name}</b> </p>
+								<div class="d-flex justify-content-between align-items-center">
+									<div class="btn-group">
+										<button type="button" class="btn btn-sm btn-outline-secondary ani-button" 
+										 onclick="location.href='/club/detail?cno=${list.cno}'">상세보기</button>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col">
-					<div class="card shadow-sm">
-						<img class="bd-placeholder-img card-img-top" width="100%"
-							height="225" src="../resources/images/billiards.jpg" role="img"
-							focusable="false">
-
-						<div class="card-body">
-							<p class="card-text">Artistic billiards</p>
-							<div class="d-flex justify-content-between align-items-center">
-								<div class="btn-group">
-									<button type="button"
-										class="btn btn-sm btn-outline-secondary ani-button">상세보기</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card shadow-sm">
-						<img class="bd-placeholder-img card-img-top" width="100%"
-							height="225" src="../resources/images/badminton.jpg" role="img"
-							focusable="false">
-
-						<div class="card-body">
-							<p class="card-text">Badminton</p>
-							<div class="d-flex justify-content-between align-items-center">
-								<div class="btn-group">
-									<button type="button"
-										class="btn btn-sm btn-outline-secondary ani-button">상세보기</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card shadow-sm">
-						<img class="bd-placeholder-img card-img-top" width="100%"
-							height="225" src="../resources/images/tennis.jpg" role="img"
-							focusable="false">
-
-						<div class="card-body">
-							<p class="card-text">Tennis</p>
-							<div class="d-flex justify-content-between align-items-center">
-								<div class="btn-group">
-									<button type="button"
-										class="btn btn-sm btn-outline-secondary ani-button">상세보기</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+				</c:forEach>
+				
+			
 			</div>
 		</div>
 	</div>

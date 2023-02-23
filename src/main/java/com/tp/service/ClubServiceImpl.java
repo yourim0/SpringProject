@@ -23,6 +23,18 @@ public class ClubServiceImpl implements ClubService {
 	private ClubMapper club_mapper;
 
 	
+	@Override
+	public List<ClubDTO> mainList1(){
+		log.info("Main Papular List " );
+		return club_mapper.mainList1();
+	}
+	@Override
+	public List<ClubDTO> mainList2(){
+		log.info("Main Papular List " );
+		return club_mapper.mainList2();
+	}
+	
+	
 //	@Override
 //	public List<ClubDTO> getList1() {
 //		log.info("asdfasdfasdfasdf");

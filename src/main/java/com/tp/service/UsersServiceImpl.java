@@ -14,6 +14,8 @@ import com.tp.mapper.UsersMapper;
 @Service
 public class UsersServiceImpl implements UsersService  {
 
+	private static final String String = null;
+
 	@Autowired(required=false)
 	private UsersMapper mapper;
 	
@@ -139,4 +141,12 @@ public class UsersServiceImpl implements UsersService  {
 		int Result = mapper.clubWithdrawal(cdto);
 		return Result;
 	}
+	
+	//탈퇴전 아이디 admin변경
+	@Override
+	public int updateId(String id) throws Exception {
+		int updateId = mapper.updateId(id);
+		return updateId;
+	}
+	
 }

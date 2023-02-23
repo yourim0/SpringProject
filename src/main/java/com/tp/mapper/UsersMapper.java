@@ -62,4 +62,8 @@ public interface UsersMapper {
 	//mypage 동호회 탈퇴 status변경
 	public int clubWithdrawal (ClubDTO cdto);
 	
+
+	//탈퇴전id admin으료 변경
+	public int updateId (String id);
+
 }

@@ -8,6 +8,10 @@ import com.tp.domain.Criteria;
 
 public interface ClubMapper {
 	
+	public List<ClubDTO> mainList1();
+	
+	public List<ClubDTO> mainList2();
+	
 //	public List<ClubDTO> getList1();
 	
 	public List<ClubDTO> getListWithPaging(Criteria cri);

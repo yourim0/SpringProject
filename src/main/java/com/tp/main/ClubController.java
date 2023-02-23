@@ -94,7 +94,7 @@ public class ClubController {
 		
 		model.addAttribute("list", service.getList1(cri));
 		//model.addAttribute("pageMaker", new PageDTO(cri, 123));
-		int total =service.getTotal(cri);
+		int total = service.getTotal(cri);
 		log.info("total:" + total);
 		log.info(service.getList1(cri));
 		model.addAttribute("pageMaker", new PageDTO(cri ,total));

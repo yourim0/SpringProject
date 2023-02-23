@@ -29,7 +29,6 @@ public class QnaBoardController {  //컨트롤러 부분
 	@RequestMapping("/qnalist")
 	public String qnalist(Model model, @ModelAttribute BoardVO board) {
 		log.info("list");
-		
 		//
 		int total = service.getListCount(board);
 		

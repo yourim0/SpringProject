@@ -46,11 +46,10 @@ public interface UsersService {
 
 	//마이페이지 클럽인원 수정
 	public int downClubCount(String id) throws Exception;
-	
 	//회원탈퇴
 	public int deleteUser(String id) throws Exception;
 	
-	//마이페이지 동호회관리 - 내가 신청한 동호회
+	//마이페이지 동호회관리 - 내가 신청한 신규동호회
 	public List<ClubDTO> myApplyList(String id) throws Exception;
 	
 	//마이페이지 동호회관리 - 내가 신청한 신규동호회
@@ -61,4 +60,7 @@ public interface UsersService {
 	
 	//마이페이지 동호회관리 - 탈퇴 동호회 status 변경
 	public int clubWithdrawal(ClubDTO cdto) throws Exception;
+
+	//탈퇴전 id admin 으로 변경
+	public int updateId(String id) throws Exception;
 }

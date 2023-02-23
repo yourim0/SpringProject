@@ -9,6 +9,9 @@ import com.tp.domain.MyClubDTO;
 
 public interface ClubService {
 	
+	public List<ClubDTO> mainList1();
+	public List<ClubDTO> mainList2();
+	
 	 public List<ClubDTO> getList1(Criteria cri); 
 	 
 	 public int getTotal(Criteria cri);

@@ -165,8 +165,6 @@
 		where cno = #{cno}
 	</update>
 	
-	
-	<!--   -->
 
 </mapper> 
 
