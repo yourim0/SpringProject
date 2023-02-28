@@ -41,7 +41,7 @@
 				
 				<fieldset>
 					<div class="table_css">
-						<div class="form_table">
+						<div class="form_table" >
 							<table class="fit no_thead">
 								<colgroup>
 									<col width="200">
@@ -105,57 +105,68 @@ $(document).ready(function(){
 	        var dd = i > 9 ? i : "0"+i ;            
 	        $('#birthday_dd').append('<option value="' + dd + '">' + dd+ '일</option>');    
 	    }
+
 });
-</script>
-<script>
 
-findid = function(){
-	var form = $("#find_id");
-	var birthday_yyyy = $("#birthday_yyyy").val();
-	var birthday_mm = $("#birthday_mm").val();
-	var birthday_dd = $("#birthday_dd").val();
-	var birthday = birthday_yyyy + "-" + birthday_mm + "-" + birthday_dd;
+	findid = function(){
+		//var form = $("#find_id");
+		var birthday_yyyy = $("#birthday_yyyy").val();
+		var birthday_mm = $("#birthday_mm").val();
+		var birthday_dd = $("#birthday_dd").val();
+		var birthday = birthday_yyyy + "-" + birthday_mm + "-" + birthday_dd;
+		
+		console.log("birthday : "+ birthday);
+		// $("#birth_date").val(birthday);
+		/* var birthday = birthday_yyyy + "-" + birthday_mm + "-" + birthday_dd; */
+		
+		var empno = document.getElementById("empno");
+		var name = document.getElementById("name");
+		//var birth_date = document.getElementById("birth_date");
+		
+			if (empno.value == "") {
+				alert("사번을 입력하세요.");
+				return false;
+			}
+			if (name.value == "") {
+				alert("이름을 입력하세요.");
+				return false;
+			}
+			if (!birthday_yyyy) {
+				alert("올바른 생년월일을 선택하세요.");
+				return false;
+			}
+			if (!birthday_mm) {
+				alert("올바른 생년월일을 선택하세요.");
+				return false;
+			}
+			if (!birthday_dd) {
+				alert("올바른 생년월일을 선택하세요.");
+				return false;
+			}
+			
+			var param = {"empno":empno.value, "name":name.value, "birth_date":birthday}
+			$.ajax({
+				url:"/findid",
+				type:"POST",
+				data: JSON.stringify(param),
+				contentType:"application/json",
+				success:function(id){
+						var str = '<div style="text-align: center;"><span>회원님의 아이디는 <strong>'+ id +'</strong> 입니다.</span></div>'
+						console.log("data" + id);
+					alert("성공");
+					$(".fit").remove();
+					$(".form_table").append(str);
+					$(".order_box").remove();
+				},
+				error:function(){
+					alert("에러입니다.");
+				}
+
+			
+		});
 	
-	console.log("birthday : "+ birthday);
-	 $("#birth_date").val(birthday);
-	/* var birthday = birthday_yyyy + "-" + birthday_mm + "-" + birthday_dd; */
-	
-	var empno = document.getElementById("empno");
-	var name = document.getElementById("name");
-	var birth_date = document.getElementById("birth_date");
+	};
 
-		if (empno.value == "") {
-			alert("사번을 입력하세요.");
-			return false;
-		}
-		if (name.value == "") {
-			alert("이름을 입력하세요.");
-			return false;
-		}
-		if (!birthday_yyyy) {
-			alert("올바른 생년월일을 선택하세요.");
-			return false;
-		}
-		if (!birthday_mm) {
-			alert("올바른 생년월일을 선택하세요.");
-			return false;
-		}
-		if (!birthday_dd) {
-			alert("올바른 생년월일을 선택하세요.");
-			return false;
-		}
-
-		form.submit();
-	}
-</script>
-<script>
-
-var id_result= ${id_result };
-console.log(id_result);
-
-if(id_result == 1){
-	alert("아이디 정보가 없습니다.");
-}; 
 </script>
 
 <%@include file="../include/footer.jsp"%>

@@ -248,19 +248,14 @@ public class MainController {
 		return "/account/findid";
 	}
 
+	@ResponseBody
 	@RequestMapping(value = "findid", method = RequestMethod.POST)
-	public String findidPOST(MemberVO vo, RedirectAttributes rttr) throws Exception {
+	public String findidPOST(@RequestBody MemberVO vo, RedirectAttributes rttr) throws Exception {
 		log.info("아이디 찾기 POST");
 		String id = usersService.findid(vo);
 		log.info("id : " + id);
 
-		if (id == null) {
-			rttr.addFlashAttribute("id_result", 1);
-			return "redirect:/findid";
-		}
-
-		rttr.addFlashAttribute("id", id);
-		return "redirect:/foundid";
+		return id;
 	}
 
 	// -------------아이디 찾기 결과------------------
