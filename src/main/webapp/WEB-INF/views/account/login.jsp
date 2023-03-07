@@ -3,6 +3,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 
 
 <%@include file="../include/header.jsp"%>
@@ -79,6 +80,11 @@
 												</div>
 											</fieldset>
 										</form>
+										
+										<!-- 네이버 로그인 창으로 이동 -->
+										<div id="naver_id_login" style="text-align:center"><a href="${url}">
+										<img width="223" src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png"/></a></div>
+										<br>
 
 										<p class="link_box">
 											<a href="/join_check">회원가입</a> <a href="/findid">아이디찾기</a> <a href="findpw">비밀번호찾기</a>
@@ -126,7 +132,7 @@ $('#id, #pw').on('keypress', function(e){
 <script>
 
 //로그인 실패 메서드
-var admin_type = ${admin_type};
+/* var admin_type = ${admin_type};
 console.log(admin_type);
 
 if(admin_type == 1){
@@ -135,7 +141,7 @@ if(admin_type == 1){
 }else{
 	alert("로그인정보가 없습니다.");
 }; 
-
+ */
 </script>
 <script>
 //체크박스 클릭시 페이지 이동
@@ -145,4 +151,15 @@ return;
 }
 
 </script>
+
+<!-- 네이버 로그인  -->
+  <script type="text/javascript">
+  	var naver_id_login = new naver_id_login("qiflu_mssSHCtB6gJj6b", "http://localhost:8081/callback");
+  	var state = naver_id_login.getUniqState();
+  	naver_id_login.setButton("white", 2,40);
+  	naver_id_login.setDomain("http://localhost:8081/login");
+  	naver_id_login.setState(state);
+  	naver_id_login.setPopup();
+  	naver_id_login.init_naver_id_login();
+  </script>
 <%@include file="../include/footer.jsp"%>

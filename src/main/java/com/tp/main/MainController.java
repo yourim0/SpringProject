@@ -121,6 +121,19 @@ public class MainController {
 		return "/account/login";
 	}
 
+	//naver
+//    @RequestMapping(value="/callback", method=RequestMethod.GET)
+//    public String callBack(){
+//        return "/account/callback";
+//    }
+//    
+    @RequestMapping(value="/callback", method=RequestMethod.GET)
+    public String callBack(){
+        return "/account/callback";
+    }
+
+	
+	
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public String loginPOST(HttpServletRequest request, UsersVO vo, RedirectAttributes rttr) throws Exception {
 		// sersVO: 데이터를 전달받기/HttpServletRequest: 로그인 성공 시 session에 회원 정보를
@@ -259,11 +272,11 @@ public class MainController {
 	}
 
 	// -------------아이디 찾기 결과------------------
-	@RequestMapping("/foundid")
-	public String foundid() {
-
-		return "/account/foundid";
-	}
+//	@RequestMapping("/foundid")
+//	public String foundid() {
+//
+//		return "/account/foundid";
+//	}
 
 	// -------------비밀번호 찾기------------------
 	@RequestMapping(value = "/findpw", method = RequestMethod.GET)
